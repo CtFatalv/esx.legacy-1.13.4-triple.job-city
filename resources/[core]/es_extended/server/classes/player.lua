@@ -152,7 +152,7 @@
 ---@param coords vector4|{x: number, y: number, z: number, heading: number}
 ---@param metadata table
 ---@return xPlayer
-function CreateExtendedPlayer(playerId, identifier, ssn, group, accounts, inventory, weight, job, loadout, name, coords, metadata)
+    function CreateExtendedPlayer(playerId, identifier, ssn, group, accounts, inventory, weight, job, job2, job3, loadout, name, coords, metadata)
     ---@diagnostic disable-next-line: missing-fields
     local self = {} ---@type xPlayer
 
