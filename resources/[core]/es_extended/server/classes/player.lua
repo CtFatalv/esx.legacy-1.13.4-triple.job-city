@@ -207,7 +207,7 @@
     function self.togglePaycheck(toggle)
         self.paycheckEnabled = toggle
     end
-
+ 
     function self.isPaycheckEnabled()
         return self.paycheckEnabled
     end
