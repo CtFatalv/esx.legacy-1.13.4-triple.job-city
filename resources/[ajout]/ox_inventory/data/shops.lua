@@ -16,27 +16,6 @@ return {
 		inventory = {
 			{ name = 'burger', price = 10 },
 			{ name = 'water', price = 10 },
-		}, locations = {
-			vec3(25.7, -1347.3, 29.49),
-			vec3(-3038.71, 585.9, 7.9),
-			vec3(-3241.47, 1001.14, 12.83),
-			vec3(1728.66, 6414.16, 35.03),
-			vec3(1697.99, 4924.4, 42.06),
-			vec3(1961.48, 3739.96, 32.34),
-			vec3(547.79, 2671.79, 42.15),
-			vec3(2679.25, 3280.12, 55.24),
-			vec3(2557.94, 382.05, 108.62),
-			vec3(373.55, 325.56, 103.56),
-			vec3(1135.808, -982.281, 46.415),
-			vec3(-1222.915, -906.983, 12.326),
-			vec3(-1487.553, -379.107, 40.163),
-			vec3(-2968.243, 390.910, 15.043),
-			vec3(1166.024, 2708.930, 38.157),
-			vec3(1392.562, 3604.684, 34.980),
-			vec3(-47.240, -1757.630, 29.420),
-			vec3(-706.69, -913.69, 19.22),
-			vec3(1164.15, -322.9, 69.21),
-			vec3(-1820.51, 793.77, 138.11)
 		}, targets = {
 			{ loc = vec3(25.06, -1347.32, 29.5), length = 0.7, width = 0.5, heading = 0.0, minZ = 29.5, maxZ = 29.9, distance = 1.5, debug = false },
 			{ loc = vec3(-3039.18, 585.13, 7.91), length = 0.6, width = 0.5, heading = 15.0, minZ = 7.91, maxZ = 8.31, distance = 1.5, debug = false },
@@ -67,9 +46,6 @@ return {
 			id = 402, colour = 69, scale = 0.7
 		}, inventory = {
 			{ name = 'lockpick', price = 10 }
-		}, locations = {
-			vec3(2748.0, 3473.0, 55.67),
-			vec3(342.99, -1298.26, 32.51)
 		}, targets = {
 			{ loc = vec3(2746.8, 3473.13, 55.67), length = 0.6, width = 3.0, heading = 65.0, minZ = 55.0, maxZ = 56.8, distance = 3.0, debug = false }
 		}
@@ -84,16 +60,6 @@ return {
 			{ name = 'WEAPON_KNIFE', price = 200 },
 			{ name = 'WEAPON_BAT', price = 100 },
 			{ name = 'WEAPON_PISTOL', price = 1000, metadata = { registered = true }, license = 'weapon' }
-		}, locations = {
-			vec3(22.56, -1109.89, 29.80),
-			vec3(-662.180, -934.961, 21.829),
-			vec3(810.25, -2157.60, 29.62),
-			vec3(1693.44, 3760.16, 34.71),
-			vec3(-330.24, 6083.88, 31.45),
-			vec3(252.63, -50.00, 69.94),
-			vec3(2567.69, 294.38, 108.73),
-			vec3(-1117.58, 2698.61, 18.55),
-			vec3(842.44, -1033.42, 28.19)
 		}, targets = {
 			{ loc = vec3(22.90, -1105.45, 29.8), length = 0.6, width = 0.5, heading = 160.0, minZ = 29.8, maxZ = 30.2, distance = 2.0, debug = false },
 			{ loc = vec3(-661.99, -933.49, 21.83), length = 0.6, width = 0.5, heading = 180.0, minZ = 21.8, maxZ = 22.2, distance = 2.0, debug = false  },
@@ -120,15 +86,13 @@ return {
 			{ name = 'WEAPON_PISTOL', price = 500, metadata = { registered = true, serial = 'POL' }, license = 'weapon' },
 			{ name = 'WEAPON_CARBINERIFLE', price = 1000, metadata = { registered = true, serial = 'POL' }, license = 'weapon', grade = 3 },
 			{ name = 'WEAPON_STUNGUN', price = 500, metadata = { registered = true, serial = 'POL'} }
-		}, locations = {
-			vec3(451.51, -979.44, 30.68)
 		}, targets = {
 			{ loc = vec3(453.21, -980.03, 30.68), length = 0.5, width = 3.0, heading = 270.0, minZ = 30.5, maxZ = 32.0, distance = 6, debug = false  }
 		}
 	},
 
 	Medicine = {
-		name = 'Medicine Cabinet',
+		name = 'Pharmacie',
 		groups = {
 			['ambulance'] = 3
 		},
@@ -137,10 +101,8 @@ return {
 		}, inventory = {
 			{ name = 'medikit', price = 26 },
 			{ name = 'bandage', price = 5 }
-		}, locations = {
-			--vec3(230.17, -1366.18, 39.53)
 		}, targets = {
-			{ loc = vec3(230.17, -1366.18, 39.53), length = 0.8, width = 1.6, heading = 50.0, minZ = 38.53, maxZ = 40.93, distance = 1.5, debug = false  }
+			{ loc = vec3(362.82, -1388.68, 31.42), length = 0.75, width = 2.4, heading = 140.0, minZ = 31.42, maxZ = 33.42, distance = 2.0, debug = false  }
 		}
 	},
 
@@ -152,8 +114,6 @@ return {
 			{ name = 'at_suppressor_light', price = 50000, currency = 'black_money' },
 			{ name = 'ammo-rifle', price = 1000, currency = 'black_money' },
 			{ name = 'ammo-rifle2', price = 1000, currency = 'black_money' }
-		}, locations = {
-			vec3(309.09, -913.75, 56.46)
 		}, targets = {
 			--{ loc = vec3(230.17, -1366.18, 39.53), length = 0.8, width = 1.6, heading = 50.0, minZ = 38.53, maxZ = 40.93, distance = 1.5, debug = false  }
 		}

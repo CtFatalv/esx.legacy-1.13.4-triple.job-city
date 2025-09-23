@@ -305,11 +305,11 @@ ESX.OpenContext("right", elements, function(menu,element)
 end)
 end
 end)
-
+---------------------------------------------------------
 exports.ox_target:addBoxZone({
-    coords =  vector3(231.61, -1368.27, 39.43),
-    size = vec3(0.6, 0.2, 0.1),
-    rotation = 261,
+    coords =  vector3(295.50, -1418.64, 29.52),
+    size = vec3(0.56, 0.20, 0.2),
+    rotation = 106,
     debug = false,
     options = {
         {

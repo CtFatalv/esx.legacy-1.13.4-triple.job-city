@@ -589,7 +589,7 @@ Config.ClothingRooms = {
     },
     {
         job = "ambulance",
-        coords = vector4(266.91, -1362.16, 24.54, 232.05),
+        coords = vector4(363.23, -1422.80, 32.94, 231.25),
         size = vector3(4, 4, 4),
         rotation = 232,
         usePoly = false,

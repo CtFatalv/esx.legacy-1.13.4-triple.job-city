@@ -1,6 +1,5 @@
 return {
 	{
-		coords = vec3(452.3, -991.4, 29.70),
 		target = {
 			loc = vec3(451.25, -994.28, 29.70),
 			length = 1.2,
@@ -20,7 +19,6 @@ return {
 	},
 
 	{
-		coords = vec3(452.02, -972.72, 29.68),
 		target = {
 			loc = vec3(452.02, -972.72, 29.68),
 			length = 0.40,
@@ -40,7 +38,25 @@ return {
 	},
 
 	{
-		coords = vec3(301.3, -600.23, 43.28),
+		target = {
+			loc = vec3(291.96, -1419.06, 28.82),
+			length = 1.34,
+			width = 1.0,
+			heading = 50,
+            minZ=28.82,
+            maxZ=30.66,
+			label = 'Coffre Patron',
+			debug = false
+		},
+		name = 'emspatronlocker',
+		label = 'Coffre Patron',
+		owner = false,
+		slots = 70,
+		weight = 70000,
+		groups = {['ambulance'] = 3}
+	},
+
+	{
 		target = {
 			loc = vec3(301.82, -600.99, 43.29),
 			length = 0.6,
@@ -60,47 +76,25 @@ return {
 	},
 
 	{
-		coords = vec3(237.31, -1360.42, 39.54),
 		target = {
-			loc = vec3(237.31, -1360.42, 39.54),
-			length = 7.0,
-			width = 2.8,
-			heading = 320,
-            minZ=33.34,
-            maxZ=41.74,
-			label = 'Coffre Patron',
+			loc = vec3(355.86, -1417.28, 31.94),
+			length = 1.3,
+			width = 1.44,
+			heading = 50,
+			minZ=31.94,
+			maxZ=33.78,
+			label = 'Stockage EMS',
 			debug = false
 		},
-		name = 'emspatronlocker',
-		label = 'Coffre Patron',
-		owner = true,
-		slots = 70,
-		weight = 70000,
-		groups = {['ambulance'] = 3}
-	},
-
-	{
-		coords = vec3(270.84, -1363.89, 24.54),
-		target = {
-			loc = vec3(270.84, -1363.89, 24.54),
-			length = 2.4,
-			width = 1.2,
-			heading = 320,
-			minZ=23.54,
-			maxZ=25.54,
-			label = 'Casier personnel',
-			debug = false
-		},
-		name = 'emspersonnellocker',
-		label = 'Casier personnel',
-		owner = true,
+		name = 'emsjoblocker',
+		label = 'Stockage EMS',
+		owner = false,
 		slots = 30,
 		weight = 70000,
-		groups = {['ambulance'] = 0}
+		groups = {['ambulance'] = 1}
 	},
 
 	{
-		coords = vec3(902.35, -153.59, 82.5),
 		target = {
 			loc = vec3(902.35, -153.59, 82.5),
 			length = 3.2,
@@ -120,7 +114,6 @@ return {
 	},
 
 	{
-		coords = vec3(92.07, -1291.26, 28.27),
 		target = {
 			loc = vec3(92.07, -1291.26, 28.27),
 			length = 0.8,
@@ -140,7 +133,6 @@ return {
 	},
 
 	{
-		coords = vec3(106.19, -1298.87, 27.77),
 		target = {
 			loc = vec3(106.19, -1298.87, 27.77),
 			length = 1.0,
@@ -160,7 +152,6 @@ return {
 	},
 
 	{
-		coords = vec3(127.86, -1281.91, 28.27),
 		target = {
 			loc = vec3(127.86, -1281.91, 28.27),
 			length = 1.2,
@@ -180,7 +171,6 @@ return {
 	},
 
 	{
-        coords = vec3(128.13, -1283.45, 28.47),
         target = {
             loc = vec3(128.13, -1283.45, 28.47),
             length = 0.6,

@@ -30,7 +30,7 @@ files {
 	'imgs/uploads/*.jpg',
 }
 
-data_file 'DLC_ITYP_REQUEST' 'stream/garage.ytyp'
+data_file 'DLC_ITYP_REQUEST' 'stream/*'
 files {
-    'stream/garage.ytyp'
+    'stream/*'
 }

@@ -49,8 +49,6 @@ function Deleteveh(plate,src)
     end
 end
 
-
-
 RegisterServerEvent('renzu_vehicleshop:sellvehicle')
 AddEventHandler('renzu_vehicleshop:sellvehicle', function()
     local source = source
@@ -100,124 +98,156 @@ end)
 RegisterServerCallBack_('renzu_vehicleshop:GenPlate', function (source, cb, prefix)
     cb(GenPlate(prefix))
 end)
+
 RegisterServerCallBack_('renzu_vehicleshop:buyvehicle', function (source, cb, model, props, payment, job, type, garage, notregister)
-    local source = source
-	local xPlayer = GetPlayerFromId(source)
-    if not job and type == 'car' and not notregister or job == 'cardealer' or job == 'mechanic' then
-        cb(Buy({[1] = Config.Vehicles[model]},xPlayer,model, props, payment, job, type , garage))
-    elseif notregister then
-        cb(Buy(true,xPlayer,model, props, payment or 'cash', job or 'civ', type or 'car' , garage or 'A' or false, notregister))
-    else     
-        for k,v in pairs(VehicleShop) do
-            local actualShop = v
-            if v.job == job and v.shop then
-                local result = {}
-                for k,v in pairs(v.shop) do
-                    if v.model:lower() == model:lower() then
-                        result[1] = {}
-                        result[1].model = v.model
-                        result[1].price = v.price
-                        result[1].stock = 100
-                        cb(Buy(result,xPlayer,model, props, payment, job, type, garage))
-                        break
-                    end
-                end
-            elseif type ~= 'car' then
-                local result = {}
-                if v.shop then
-                    for k,v in pairs(v.shop) do
-                        if v.model:lower() == model:lower() then
-                            result[1] = {}
-                            result[1].model = v.model
-                            result[1].price = v.price
-                            result[1].stock = 100
-                            cb(Buy(result,xPlayer,model, props, payment, job, type, garage))
-                            break
-                        end
-                    end
+    local xPlayer = GetPlayerFromId(source)
+    
+    if not xPlayer then
+        cb(false)
+        return
+    end
+
+    if (not job and type == 'car' and not notregister) or job == 'cardealer' then
+        cb(Buy({[1] = Config.Vehicles[model]}, xPlayer, model, props, payment, job, type, garage))
+        return
+    end
+
+    if notregister then
+        cb(Buy(true, xPlayer, model, props, payment or 'cash', job or 'civ', type or 'car', garage or 'A', notregister))
+        return
+    end
+
+    for _, v in pairs(VehicleShop) do
+        if v.shop then
+            for _, veh in pairs(v.shop) do
+                if veh.model:lower() == model:lower() then
+                    local result = {[1] = {model = veh.model, price = veh.price, stock = 100}}
+                    cb(Buy(result, xPlayer, model, props, payment, job, type, garage))
+                    return
                 end
             end
         end
     end
+
+    cb(false)
 end)
+
 
 local temp = {}
 
-function Buy(result,xPlayer,model, props, payment, job, type, garage, notregister)
-    fetchdone = false
-    bool = false
-    model = model
+function Buy(result, xPlayer, model, props, payment, job, type, garage, notregister)
+    print("Buy")
+    local bool = false
+    local price, stock
+
     if result then
-        local price = nil
-        local stock = nil
         if not notregister then
             model = result[1].model
             price = result[1].price
         else
-            model = model
             price = notregister.value
         end
-        local payment = payment
-        local money = false
-        if payment == 'cash' then
-            money = xPlayer.getMoney() >= tonumber(price)
-        else
-            money = xPlayer.getAccount('bank').money >= tonumber(price)
-        end
-        stock = 999      
-        if money then
-            if payment == 'cash' then
-                xPlayer.removeMoney(tonumber(price))
-            elseif payment == 'bank' then
-                xPlayer.removeAccountMoney('bank', tonumber(price))
+
+        -- Vérifier l'argent
+        local canPay = false
+        if not job or job == false then
+            -- Achat par joueur normal
+            local playerMoney = xPlayer.getAccount('bank').money or 0
+            if playerMoney >= tonumber(price) then
+                canPay = true
             else
-                xPlayer.removeMoney(tonumber(price))
+                canPay = false
             end
+        else
+            -- Achat par job → on gère après avec la société
+            canPay = true
+        end
+
+        stock = 999
+        if canPay then
+            print("money disponible")
+
+            -- Paiement
+            if not job or job == false then
+                xPlayer.removeAccountMoney('bank', tonumber(price))
+                print("paiement joueur effectué")
+            else
+                -- Paiement entreprise synchronisé
+                local done = false
+                local success = false
+                TriggerEvent('esx_addonaccount:getSharedAccount', 'society_'..job, function(account)
+                    if account.money >= tonumber(price) then
+                        account.removeMoney(tonumber(price))
+                        print("retrait effectué société", job)
+                        success = true
+                    else
+                        xPlayer.showNotification("La société n'a pas assez d'argent")
+                        print("retour entreprise pas assez d'argent")
+                        success = false
+                    end
+                    done = true
+                end)
+
+                local timeout = 0
+                while not done and timeout < 100 do
+                    Wait(10)
+                    timeout = timeout + 1
+                end
+
+                if not success then
+                    return false
+                end
+            end
+
+            -- Déterminer parking automatiquement selon le type
+            local parkingName = "SandyShores"
+            if type == "car" then
+                parkingName = "SandyShores"
+            elseif type == "air" then
+                parkingName = "SandyShoresAir"
+            elseif type == "boat" then
+                parkingName = "SandyShoresBoat"
+            end
+
+            print("type", type, "parking choisi", parkingName)
+
             stock = stock - 1
+
+            -- Enregistrement en DB
             local data = json.encode(props)
-            local query = 'INSERT INTO '..vehicletable..' ('..owner..', plate, '..vehiclemod..', job, `'..stored..'`, '..garage_id..', `'..type_..'`) VALUES (@'..owner..', @plate, @props, @job, @'..stored..', @'..garage_id..', @'..type_..')'
+            local query = 'INSERT INTO '..vehicletable..' ('..owner..', plate, '..vehiclemod..', job, `'..stored..'`, `parking`, `'..type_..'`) ' ..
+                          'VALUES (@'..owner..', @plate, @props, @job, @'..stored..', @parking, @'..type_..')'
+
             local var = {
                 ['@'..owner..'']   = xPlayer.identifier,
-                ['@plate']   = props.plate:upper(),
-                ['@props'] = data,
-                ['@job'] = job,
-                ['@'..stored..''] = 0,
-                ['@'..garage_id..''] = garage,
-                ['@'..type_..''] = type
+                ['@plate']         = props.plate:upper(),
+                ['@props']         = data,
+                ['@job']           = job or "civ",
+                ['@'..stored..'']  = 0,
+                ['@parking']       = parkingName,
+                ['@'..type_..'']   = type or "car"
             }
-            if Config.framework == 'QBCORE' then
-                query = 'INSERT INTO '..vehicletable..' ('..owner..', plate, '..vehiclemod..', `'..stored..'`, job, '..garage_id..', `'..type_..'`, `hash`, `citizenid`) VALUES (@'..owner..', @plate, @props, @'..stored..', @job, @'..garage_id..', @vehicle, @hash, @citizenid)'
-                var = {
-                    ['@'..owner..'']   = xPlayer.identifier,
-                    ['@plate']   = props.plate:upper(),
-                    ['@props'] = data,
-                    ['@'..stored..''] = 0,
-                    ['@job'] = job,
-                    ['@'..garage_id..''] = 'pillboxgarage',
-                    ['@vehicle'] = model,
-                    ['@hash'] = tostring(GetHashKey(model)),
-                    ['@citizenid'] = xPlayer.citizenid,
-                }
-            end
-            CustomsSQL(Config.Mysql,'execute',query,var)
-            fetchdone = true
+
+            CustomsSQL(Config.Mysql, 'execute', query, var)
+
             bool = true
             temp[props.plate] = true
-            --TriggerClientEvent('mycarkeys:setowned',xPlayer.source,props.plate) -- sample
+            -- TriggerClientEvent('mycarkeys:setowned', xPlayer.source, props.plate) -- si tu veux donner les clés
+
         else
-            xPlayer.showNotification('Not Enough Money',1,0,110)
-            fetchdone = true
+            xPlayer.showNotification('Not Enough Money', 1, 0, 110)
             bool = false
         end
     else
         print("Le véhicule n'existe pas")
-        xPlayer.showNotification('Vehicle does not Exist',1,0,110)
-        fetchdone = true
+        xPlayer.showNotification('Vehicle does not Exist', 1, 0, 110)
         bool = false
     end
-    while not fetchdone do Wait(0) end
+
     return bool
 end
+
+
 
 RegisterServerEvent('ox_carkeys:recupsrv')
 AddEventHandler('ox_carkeys:recupsrv', function(localVehPlate, vehicleName)

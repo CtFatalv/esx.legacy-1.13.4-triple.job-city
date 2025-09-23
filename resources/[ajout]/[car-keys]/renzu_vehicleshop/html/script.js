@@ -185,13 +185,15 @@ $(document).ready(function() {
     });
 
     var app = '<main id="customextra" style="padding:10px;display:block;">\
+    <header style="text-align:center;padding:5px;"><button onclick="choosecolor(`primary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;background: #414244;color: #fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px !important;height: 100%;margin-right: 20px;">primary</button><button onclick="choosecolor(`secondary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px;height: 100%;">Secondary</button></header>\
+    <div class="colors" style="height:170px;overflow-x:hidden;"></div>\
     <header style="text-align: center;\
     padding: 6px;\
     font-size: 15px;\
     color: #fff;\
     padding-bottom: 0;\
     height: 20px;\
-}"> Autocollant </header>\
+}"> Liveries </header>\
     <header style="text-align:center;padding: 6px;"><button onclick="livery(false)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;background: #414244;color: #fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: -10px !important;height: 100%;margin-right: 20px;"><i style="display:contents;" class="fas fa-arrow-left"></i></button><button onclick="livery(true)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: -10px;height: 100%;"> <i style="display:contents;" class="fas fa-arrow-right"></i></button></header>\
   </main>\
   <div class="container">\
@@ -391,24 +393,19 @@ function BuyVehicle(n,c,p) {
         <div class="modal-footer">
             <div class="modal-buttons">     
                 <div>
-                    <span>Buy</span>
+                    <span>Acheter</span>
                     <button id="money" class="modal-money button" onclick="BuyVehicleCallback('confirm')" >✔️</button>
                 </div>
                 <div>
-                    <span>Cancel</span>
+                    <span>Annuler</span>
                     <button href="#!" id="card" class="modal-money button" onclick="BuyVehicleCallback('cancel')">X</button>
                 </div>
             </div>
             <div class="wrapper">
             <input type="radio" name="select" id="option-1" checked>
-            <input type="radio" name="select" id="option-2">
             <label for="option-1" class="option option-1">
             <div class="dot"></div>
-            <span>Cash</span>
-            </label>
-            <label for="option-2" class="option option-2">
-            <div class="dot"></div>
-            <span>Bank</span>
+            <span>Banque</span>
             </label>
             </div>
         </div>
@@ -416,11 +413,6 @@ function BuyVehicle(n,c,p) {
     $('input[type=radio][id=option-1]').change(function() {
         if (this.value == 'on') {
             CurrentVehicle.payment = 'cash'
-        }
-    });
-    $('input[type=radio][id=option-2]').change(function() {
-        if (this.value == 'on') {
-            CurrentVehicle.payment = 'bank'
         }
     });
 }
@@ -443,11 +435,11 @@ function TestDrive(n,c,p,m) {
         <div class="modal-footer">
             <div class="modal-buttons">     
                 <div>
-                    <span>Buy</span>
+                    <span>Acheter</span>
                     <button id="money" class="modal-money button" onclick="TestDriveCallback('confirm')" >✔️</button>
                 </div>
                 <div>
-                    <span>Cancel</span>
+                    <span>Annuler</span>
                     <button href="#!" id="card" class="modal-money button" onclick="TestDriveCallback('cancel')">X</button>
                 </div>
             </div>

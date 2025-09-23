@@ -38,9 +38,8 @@ Config.RespawnPoints = {
 Config.Hospitals = {
 
 	CentralLosSantos = {
-
 		Blip = {
-			coords = vector3(307.7, -1433.4, 28.9),
+			coords = vector3(342.84, -1398.15, 32.51),
 			sprite = 61,
 			scale  = 0.7,
 			color  = 2

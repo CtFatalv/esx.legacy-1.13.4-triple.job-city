@@ -1,4 +1,3 @@
-
 local LastVehicleFromGarage
 local id = 'A'
 local garage = 'A'
@@ -134,6 +133,7 @@ AddTarget = function(data)
 		garageped = CreatePed(4,model,self.coords.x,self.coords.y,self.coords.z,0.0,false,true)
 		while not DoesEntityExist(garageped) do Wait(0) end
 		SetPedConfigFlag(garageped,17,true)
+        SetEntityInvincible(garageped, true)
 		TaskTurnPedToFaceEntity(garageped,cache.ped,-1)
 		local options = {
 			{
@@ -443,7 +443,7 @@ AddEventHandler('vehicleshop', function()
                             id = k
                             garage = v.default_garage or 'A'
                             shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
-                            OpenShop(k)
+                            OpenShop(k, v)
                         else
                             ShowNotification("You Dont have a drivers licensed")
                         end
@@ -458,7 +458,7 @@ AddEventHandler('vehicleshop', function()
                     garage = v.default_garage or 'A'
 
                     shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
-                    OpenShop(k)
+                    OpenShop(k, v)
                     break
                 end
             end
@@ -497,6 +497,8 @@ end
 function SetVehicleProp(vehicle, props)
     -- https://github.com/esx-framework/es_extended/tree/v1-final COPYRIGHT
     if DoesEntityExist(vehicle) then
+		local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
+		local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
 		SetVehicleModKit(vehicle, 0)
 		if props.plate then SetVehicleNumberPlateText(vehicle, props.plate) end
 		if props.plateIndex then SetVehicleNumberPlateTextIndex(vehicle, props.plateIndex) end
@@ -504,6 +506,10 @@ function SetVehicleProp(vehicle, props)
 		if props.engineHealth then SetVehicleEngineHealth(vehicle, props.engineHealth + 0.0) end
 		if props.tankHealth then SetVehiclePetrolTankHealth(vehicle, props.tankHealth + 0.0) end
 		if props.dirtLevel then SetVehicleDirtLevel(vehicle, props.dirtLevel + 0.0) end
+		if props.rgb then SetVehicleCustomPrimaryColour(vehicle, props.rgb[1], props.rgb[2], props.rgb[3]) end
+		if props.rgb2 then SetVehicleCustomSecondaryColour(vehicle, props.rgb2[1], props.rgb2[2], props.rgb2[3]) end
+		if props.color1 then SetVehicleColours(vehicle, props.color1, colorSecondary) end
+		if props.color2 then SetVehicleColours(vehicle, props.color1 or colorPrimary, props.color2) end
 		if props.pearlescentColor then SetVehicleExtraColours(vehicle, props.pearlescentColor, wheelColor) end
 		if props.wheelColor then SetVehicleExtraColours(vehicle, props.pearlescentColor or pearlescentColor, props.wheelColor) end
 		if props.wheels then SetVehicleWheelType(vehicle, props.wheels) end
@@ -594,6 +600,7 @@ end
 function GetVehicleProperties(vehicle)
     -- https://github.com/esx-framework/es_extended/tree/v1-final COPYRIGHT
     if DoesEntityExist(vehicle) then
+        local colorPrimary, colorSecondary = GetVehicleColours(vehicle)
         local pearlescentColor, wheelColor = GetVehicleExtraColours(vehicle)
         local extras = {}
         for extraId=0, 12 do
@@ -618,6 +625,10 @@ function GetVehicleProperties(vehicle)
 
             fuelLevel         = MathRound(GetVehicleFuelLevel(vehicle), 1),
             dirtLevel         = MathRound(GetVehicleDirtLevel(vehicle), 1),
+            color1            = colorPrimary,
+            color2            = colorSecondary,
+            rgb				  = table.pack(GetVehicleCustomPrimaryColour(vehicle)),
+            rgb2				  = table.pack(GetVehicleCustomSecondaryColour(vehicle)),
             pearlescentColor  = pearlescentColor,
             wheelColor        = wheelColor,
 
@@ -691,6 +702,26 @@ function GetVehicleProperties(vehicle)
     end
 end
 
+local owned_veh = {}
+colortype = 'primary'
+RegisterNUICallback("selectcolortype", function(data, cb)
+    colortype = data.type
+end)
+
+RegisterNUICallback("choosecolor", function(data, cb)
+    if colortype == 'primary' then
+        presetprimarycolor = {r = data.r, g = data.g, b = data.b}
+        if LastVehicleFromGarage then
+            SetVehicleCustomPrimaryColour(LastVehicleFromGarage,tonumber(presetprimarycolor.r),tonumber(presetprimarycolor.g),tonumber(presetprimarycolor.b))
+        end
+    else
+        presetsecondarycolor = {r = data.r, g = data.g, b = data.b}
+        if LastVehicleFromGarage then
+            SetVehicleCustomSecondaryColour(LastVehicleFromGarage,tonumber(presetsecondarycolor.r),tonumber(presetsecondarycolor.g),tonumber(presetsecondarycolor.b))
+        end
+    end
+end)
+
 RegisterNUICallback("setlivery", function(data, cb)
     local vehicle = LastVehicleFromGarage
     SetVehicleModKit(vehicle,0)
@@ -719,7 +750,7 @@ RegisterNUICallback("choosebrands", function(data, cb)
     local cats = {}
     for k,v2 in pairs(Vehicles) do
         for k2,v in pairs(v2) do
-            if data.brand == v.brand and IsModelInCdimage(GetHashKey(v.model)) then
+			if data.brand == v.brand and IsModelInCdimage(GetHashKey(v.model)) then
                 cars = cars + 1
                 cats[v.brand] = true
                 if vehtable[v.name] == nil then
@@ -740,8 +771,12 @@ RegisterNUICallback("choosebrands", function(data, cb)
                     name = v.name,
                     price = v.price,
                     shop = v.shop,
+					job = jobcar,
+                    grade = v.grade,
                 }
                 table.insert(vehtable[v.name], veh)
+				print("1")
+				print("vehtable", json.encode(vehtable))
             end
         end
     end
@@ -760,7 +795,7 @@ RegisterNUICallback("choosebrands", function(data, cb)
         )
 
         SetNuiFocus(true, true)
-        if not Config.Quickpick and type == 'car' then
+        if not Config.Quickpick then
             RequestCollisionAtCoord(926.15, -959.06, 61.94-30.0)
             for k,v in pairs(VehicleShop) do
                 local dist = #(vector3(v.shop_x,v.shop_y,v.shop_z) - GetEntityCoords(ped))
@@ -813,8 +848,7 @@ RegisterNUICallback("choosecategory", function(data, cb)
     local cats = {}
     for k,v2 in pairs(Vehicles) do
         for k2,v in pairs(v2) do
-            if shoptype == 'car' and brand == v.brand and data.category == v.category and IsModelInCdimage(GetHashKey(v.model))
-            or shoptype ~= 'car' and data.category == v.category and IsModelInCdimage(GetHashKey(v.model)) then
+            if brand == v.brand and data.category == v.category and IsModelInCdimage(GetHashKey(v.model)) and playerJob == v.job and playerGrade >= v.grade  then
                 cars = cars + 1
                 cats[v.category] = true
                 if vehtable[v.name] == nil then
@@ -836,8 +870,40 @@ RegisterNUICallback("choosecategory", function(data, cb)
                 name = v.name,
                 price = v.price,
                 shop = v.shop,
+				job = jobcar,
+				grade = v.grade,
                 }
                 table.insert(vehtable[v.name], veh)
+				print("2")
+				print("vehtable", json.encode(vehtable))
+            elseif jobcar == false then
+                cars = cars + 1
+                cats[v.category] = true
+                if vehtable[v.name] == nil then
+                    vehtable[v.name] = {}
+                end
+                veh = 
+                {
+                brand = v.brand,
+                category = v.category,
+                image = v.image,
+                name = v.name,
+                brake = v.brake,
+                handling = v.handling,
+                topspeed = v.topspeed,
+                power = v.power,
+                torque = v.torque,
+                model = v.model,
+                model2 = v.model2,
+                name = v.name,
+                price = v.price,
+                shop = v.shop,
+				job = jobcar,
+				grade = v.grade,
+                }
+                table.insert(vehtable[v.name], veh)
+				print("2")
+				print("vehtable", json.encode(vehtable))
             end
         end
     end
@@ -851,7 +917,7 @@ RegisterNUICallback("choosecategory", function(data, cb)
         )
 
         SetNuiFocus(true, true)
-        if not Config.Quickpick and type == 'car' then
+        if not Config.Quickpick then
             RequestCollisionAtCoord(926.15, -959.06, 61.94-30.0)
             for k,v in pairs(VehicleShop) do
                 local dist = #(vector3(v.shop_x,v.shop_y,v.shop_z) - GetEntityCoords(ped))
@@ -904,16 +970,14 @@ PopulateVehicleshop = function(k)
     vehiclesdb = tb
     local gstate = GlobalState and GlobalState.VehicleImages
     for _,value in pairs(tb) do
+        print("tb", json.encode(tb))
         --local props = json.decode(value.vehicle)
         local vehicleModel = joaat(value.model)
         if IsModelInCdimage(vehicleModel) then
             if not Vehicles[value.brand] then Vehicles[value.brand] = {} end
-            if shoptype ~= 'car' then
-                cats[value.brand] = value.shop
-            end
-            if shoptype == 'car' and value.brand ~= nil then
+
                 brands[value.brand] = value.shop
-            end
+
             local label = nil
             if label == nil then
                 label = 'Unknown'
@@ -948,9 +1012,13 @@ PopulateVehicleshop = function(k)
                 model2 = GetHashKey(value.model),
                 price = value.price,
                 name = value.name,
-                shop = value.shop
+                shop = value.shop,
+				job = jobcar,
+                grade = value.grade
             }
             table.insert(Vehicles[value.brand], VTable)
+            print("3")
+            print("Vehicles", json.encode(Vehicles))
         end
     end
     SendNUIMessage(
@@ -973,13 +1041,16 @@ PopulateVehicleshop = function(k)
 end
 
 DoScreenFadeIn(1)
-function OpenShop(id)
+function OpenShop(id, v)
     PopulateVehicleshop(id)
     inGarage = true
     local ped = PlayerPedId()
     FreezeEntityPosition(PlayerPedId(),true)
-    if not Config.Quickpick and type == 'car' then
-        CreateGarageShell()
+    if not Config.Quickpick then
+        if v.type == "car" then
+            print("shell")
+        	CreateGarageShell()
+        end
     end
     while not fetchdone do
     Citizen.Wait(333)
@@ -987,47 +1058,82 @@ function OpenShop(id)
     local vehtable = {}
     vehtable[id] = {}
     local cars = 0
-    if not Config.Quickpick and type == 'car' then
+    if not Config.Quickpick then
         DoScreenFadeOut(0)
     end
-    while Config.UseArenaSpawn and type == 'car' and not IsIplActive("xs_arena_interior") do Wait(0) end
+    while Config.UseArenaSpawn and not IsIplActive("xs_arena_interior") do Wait(0) end
     while not HasCollisionLoadedAroundEntity(ped) do Wait(0) DoScreenFadeOut(0) end
     Wait(1000)
     DoScreenFadeIn(3000)
+    local playerData = ESX.GetPlayerData()
+    local playerJob = playerData.job.name
+    local playerGrade = playerData.job.grade
     for k,v2 in pairs(Vehicles) do
         for k2,v in pairs(v2) do
-            if id == v.shop and IsModelInCdimage(GetHashKey(v.model)) then
+            print("jobcar", jobcar)
+        	if id == v.shop and IsModelInCdimage(GetHashKey(v.model)) and playerJob == v.job and playerGrade >= v.grade then
+            print("jobcar 1", jobcar)
                 cars = cars + 1
                 if vehtable[v.name] == nil then
                     vehtable[v.name] = {}
                 end
-                veh = 
-                {
-                brand = v.brand,
-                category = v.category,
-                image = v.image,
-                name = v.name,
-                brake = v.brake,
-                handling = v.handling,
-                topspeed = v.topspeed,
-                power = v.power,
-                torque = v.torque,
-                model = v.model,
-                model2 = v.model2,
-                name = v.name,
-                price = v.price,
-                shop = v.shop,
+                veh = {
+                    brand = v.brand,
+                    category = v.category,
+                    image = v.image,
+                    name = v.name,
+                    brake = v.brake,
+                    handling = v.handling,
+                    topspeed = v.topspeed,
+                    power = v.power,
+                    torque = v.torque,
+                    model = v.model,
+                    model2 = v.model2,
+                    price = v.price,
+                    shop = v.shop,
+					job = jobcar,
+                    grade = v.grade
                 }
                 table.insert(vehtable[v.name], veh)
+                print("4")
+                print("jobcar", jobcar)
+                print("vehtable", json.encode(vehtable))
+			elseif jobcar == false then
+            print("jobcar 2", jobcar)
+				cars = cars + 1
+                if vehtable[v.name] == nil then
+                    vehtable[v.name] = {}
+                end
+                veh = {
+                    brand = v.brand,
+                    category = v.category,
+                    image = v.image,
+                    name = v.name,
+                    brake = v.brake,
+                    handling = v.handling,
+                    topspeed = v.topspeed,
+                    power = v.power,
+                    torque = v.torque,
+                    model = v.model,
+                    model2 = v.model2,
+                    price = v.price,
+                    shop = v.shop,
+					job = jobcar,
+                    grade = v.grade
+                }
+                table.insert(vehtable[v.name], veh)
+                print("4")
+                print("jobcar", jobcar)
+                print("vehtable", json.encode(vehtable))
+                
             end
         end
         break
     end
+
     if cars > 0 then
         local quick = Config.Quickpick
-        if type ~= 'car' then
-            quick = true
-        end
+
         SendNUIMessage(
             {
                 garage_id = id,
@@ -1039,9 +1145,13 @@ function OpenShop(id)
         )
 
         SetNuiFocus(true, true)
-        if not Config.Quickpick and type == 'car' then
+        if not Config.Quickpick then
             RequestCollisionAtCoord(2800.5966796875,-3799.7370605469,139.41514587402)
             for k,v in pairs(VehicleShop) do
+                print('VehicleShopici', json.encode(VehicleShop))
+                print('v', json.encode(v))
+                print('v.type', json.encode(v.type))
+                print('k', json.encode(k))
                 local dist = #(vector3(v.shop_x,v.shop_y,v.shop_z) - GetEntityCoords(ped))
                 if Config.UseArenaSpawn then
                     vec = vector3(2800.5966796875,-3799.7370605469,139.41514587402)
@@ -1061,18 +1171,50 @@ function OpenShop(id)
                     end
                 else
                     if dist <= 40.0 and id == v.name then
-                        shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
-                        cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-5.0, v.shop_y-3.0, v.shop_z-28.5, 360.00, 0.00, 0.00, 60.00, false, 0)
-                        PointCamAtCoord(cam, v.shop_x, v.shop_y, v.shop_z-30.0)
-                        SetCamActive(cam, true)
-                        SetCamFov(cam, 45.0)
-                        SetCamRot(cam, -15.0, 0.0, 252.063)
-                        RenderScriptCams(true, true, 1, true, true)
-                        SetFocusPosAndVel(v.shop_x, v.shop_y, v.shop_z-30.0, 0.0, 0.0, 0.0)
-                        DisplayHud(false)
-                        DisplayRadar(false)
-                        break
-                    end
+                        print("pos joueur")
+                        if v.type == "car" then
+                            print("1.1")
+                            shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
+                            cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-5.0, v.shop_y-3.0, v.shop_z-28.5, 360.00, 0.00, 0.00, 60.00, false, 0)
+                            PointCamAtCoord(cam, v.shop_x, v.shop_y, v.shop_z-30.0)
+                            SetCamActive(cam, true)
+                            SetCamFov(cam, 45.0)
+                            SetCamRot(cam, -15.0, 0.0, 252.063)
+                            RenderScriptCams(true, true, 1, true, true)
+                            SetFocusPosAndVel(v.shop_x, v.shop_y, v.shop_z-30.0, 0.0, 0.0, 0.0)
+                            DisplayHud(false)
+                            DisplayRadar(false)
+                            break
+                        elseif v.type == 'boat' then
+                            print("2.2")
+                            shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
+                            cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-5.0, v.shop_y-3.0, v.shop_z-29.0, 360.00, 0.00, 0.00, 60.00, false, 0)
+                            --cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-17.0, v.shop_y-15.0, v.shop_z-15.0, 0.0, 0.0, 0.0, 60.0, false, 0)
+                            PointCamAtCoord(cam, v.shop_x, v.shop_y, v.shop_z-40.0)
+                            SetCamActive(cam, true)
+                            SetCamFov(cam, 45.0)
+                            --SetCamRot(cam, -15.0, 0.0, 252.063)
+                            RenderScriptCams(true, true, 1, true, true)
+                            SetFocusPosAndVel(v.shop_x, v.shop_y, v.shop_z-30.0, 0.0, 0.0, 0.0)
+                            DisplayHud(false)
+                            DisplayRadar(false)
+                            break
+						else
+                            print("3.3")
+                            shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
+                            cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-13.0, v.shop_y-10.0, v.shop_z-30.0, 360.00, 0.00, 0.00, 60.00, false, 0)
+                            --cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-17.0, v.shop_y-15.0, v.shop_z-15.0, 0.0, 0.0, 0.0, 60.0, false, 0)
+                            PointCamAtCoord(cam, v.shop_x, v.shop_y, v.shop_z-40.0)
+                            SetCamActive(cam, true)
+                            SetCamFov(cam, 45.0)
+                            --SetCamRot(cam, -15.0, 0.0, 252.063)
+                            RenderScriptCams(true, true, 1, true, true)
+                            SetFocusPosAndVel(v.shop_x, v.shop_y, v.shop_z-30.0, 0.0, 0.0, 0.0)
+                            DisplayHud(false)
+                            DisplayRadar(false)
+                            break
+                        end
+					end
                 end
             end
             Citizen.CreateThread(function()
@@ -1115,8 +1257,9 @@ function inShowRoom(bool)
         inshell = true
         while inshell do
             Citizen.Wait(0)
-            NetworkOverrideClockTime(22, 00, 00)
+            --NetworkOverrideClockTime(22, 00, 00)
         end
+            --print("NetworkOverrideClockTime", json.encode(NetworkOverrideClockTime))
     elseif bool == 'exit' then
         inshell = false
     end
@@ -1152,6 +1295,7 @@ end
 local shell = nil
 local arenacoord = vector4(2800.55,-3799.73,139.41,244.54)
 function CreateGarageShell()
+    print("Shell ok")
     local ped = PlayerPedId()
     garage_coords = GetEntityCoords(ped)-vector3(0,0,30.0)
     local model = GetHashKey('garage')
@@ -1362,28 +1506,44 @@ function SpawnVehicleLocal(model)
             else
                 vec = vector3(v.shop_x,v.shop_y,zaxis - 30.0)
             end
-            LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z, 90.0, false, true)
-            while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
-            SetEntityHeading(LastVehicleFromGarage, 90.117)
-            FreezeEntityPosition(LastVehicleFromGarage, true)
-            SetEntityCollision(LastVehicleFromGarage,false)
-            SetVehicleDirtLevel(LastVehicleFromGarage, 0.0)
-            --SetVehicleProp(LastVehicleFromGarage, props)
-            currentcar = LastVehicleFromGarage
-            if currentcar ~= LastVehicleFromGarage then
-                ReqAndDelete(LastVehicleFromGarage)
-            end
-            SetModelAsNoLongerNeeded(hash)
-            --SetEntityAlpha(PlayerPedId(),1,true)
-            SetVehicleEngineOn(LastVehicleFromGarage,true,true,false)
-            --TaskWarpPedIntoVehicle(PlayerPedId(), LastVehicleFromGarage, -1)
-            inShowRoom('enter')
-        end
+            print("pos véhicule")
+            if v.type == 'car' then
+                print("ici car")
+                LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z, 90.0, false, true)
+                while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
+                SetEntityHeading(LastVehicleFromGarage, 90.117)
+                FreezeEntityPosition(LastVehicleFromGarage, true)
+                SetEntityCollision(LastVehicleFromGarage,false)
+                SetVehicleDirtLevel(LastVehicleFromGarage, 0.0)
+                --SetVehicleProp(LastVehicleFromGarage, props)
+                currentcar = LastVehicleFromGarage
+			elseif v.type == 'boat' then
+                print("ici Boat")
+                LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z-10, 90.0, false, true)
+                while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
+                SetEntityHeading(LastVehicleFromGarage, 90.117)
+                FreezeEntityPosition(LastVehicleFromGarage, true)
+                SetEntityCollision(LastVehicleFromGarage,false)
+                SetVehicleDirtLevel(LastVehicleFromGarage, 0.0)
+            	--SetVehicleProp(LastVehicleFromGarage, props)
+                currentcar = LastVehicleFromGarage
+			else
+                print("nop car")
+                LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z-10, 90.0, false, true)
+                while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
+                SetEntityHeading(LastVehicleFromGarage, 90.117)
+                FreezeEntityPosition(LastVehicleFromGarage, true)
+                SetEntityCollision(LastVehicleFromGarage,false)
+                SetVehicleDirtLevel(LastVehicleFromGarage, 0.0)
+            	--SetVehicleProp(LastVehicleFromGarage, props)
+                currentcar = LastVehicleFromGarage
+			end
+		end
     end
 end
 
 RegisterNUICallback("SpawnVehicle",function(data, cb)
-    if not Config.Quickpick and type == 'car' then
+    if not Config.Quickpick then
         SpawnVehicleLocal(data.modelcar)
     end
 end)
@@ -1400,7 +1560,6 @@ AddEventHandler('renzu_vehicleshop:buyvehicle', function(model,shop,payment,notr
 end)
 
 function BuyVehicle(data,notregister)
-    local playerPed = GetPlayerPed(-1)
     local ped = PlayerPedId()
     local props = nil
     local veh = nil
@@ -1421,6 +1580,12 @@ function BuyVehicle(data,notregister)
         veh = v
         while not DoesEntityExist(veh) do Wait(10) end
         SetVehicleNumberPlateText(v,string.gsub(tostring(plate), '^%s*(.-)%s*$', '%1'))
+        if presetprimarycolor ~= nil and presetprimarycolor.r ~= nil then
+            SetVehicleCustomPrimaryColour(v,tonumber(presetprimarycolor.r),tonumber(presetprimarycolor.g),tonumber(presetprimarycolor.b))
+        end
+        if presetsecondarycolor ~= nil and presetsecondarycolor.r ~= nil then
+            SetVehicleCustomSecondaryColour(v,tonumber(presetsecondarycolor.r),tonumber(presetsecondarycolor.g),tonumber(presetsecondarycolor.b))
+        end
         if GetVehicleLiveryCount(vehicle) ~= -1 and livery ~= nil then
             SetVehicleLivery(v,livery)
         elseif livery ~= nil then
@@ -1436,8 +1601,6 @@ function BuyVehicle(data,notregister)
                 successbuy = canbuy
                 for k,v in pairs(VehicleShop) do
                     local dist = #(vector3(v.spawn_x,v.spawn_y,v.spawn_z) - GetEntityCoords(PlayerPedId()))
-					local localVehId = GetVehiclePedIsIn(GetPlayerPed(-1), false)
-					local localVehPlate = GetVehicleNumberPlateText(localVehId)
                     if dist <= 70.0 and id == k then
                         DoScreenFadeOut(333)
                         ReqAndDelete(LastVehicleFromGarage)
@@ -1448,11 +1611,12 @@ function BuyVehicle(data,notregister)
                         NetworkFadeInEntity(veh,1)
                     end
                 end
-				TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
+
                 LastVehicleFromGarage = nil
                 CloseNui()
                 ShowNotification("Purchase Success: Plate: "..props.plate.."")
                 SetEntityAlpha(v, 255, false)
+                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
                 i = 0
                 min = 0
                 max = 10
@@ -1463,6 +1627,8 @@ function BuyVehicle(data,notregister)
                 {
                 type = "cleanup"
                 })
+                presetsecondarycolor = {}
+                presetprimarycolor = {}
                 livery = nil
                 SetVehicleDirtLevel(veh, 0.0)
             else
@@ -1476,21 +1642,10 @@ function BuyVehicle(data,notregister)
             CloseNui()
             ReqAndDelete(v)
         end
-		BuyVehiclezeezze()
         DoScreenFadeIn(1000)
-        end,VehicleShop[data.shop].plateprefix or false)
-        Wait(3000)
-        DoScreenFadeIn(1000)
-end
-
-function BuyVehiclezeezze()
-    local playerPed = GetPlayerPed(-1)
-	local vehicle = GetVehiclePedIsIn(playerPed, false)
-	local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
-    local localVehPlate = GetVehicleNumberPlateText(vehicle)
-    print("vehicleName", json.encode(vehicleName))
-    TriggerServerEvent('ox_carkeys:KeyOnBuy', localVehPlate, vehicleName) 
-	TriggerServerEvent('ox_carkeys:recupsrv', localVehPlate, vehicleName)
+    end,VehicleShop[data.shop].plateprefix or false)
+    Wait(3000)
+    DoScreenFadeIn(1000)
 end
 
 RegisterNUICallback(
@@ -1510,9 +1665,9 @@ RegisterNUICallback(
         local v = nil
         local hash = tonumber(data.modelcar)
         local count = 0
-        if Config.EnableTestDrive and type ~= 'plane' then
+        if Config.EnableTestDrive then
             testdrive = true
-            if Config.UseArenaSpawn and type == 'car' then
+            if Config.UseArenaSpawn then
                 CloseNui()
                 LoadArena()
                 DoScreenFadeOut(0)
@@ -1540,6 +1695,12 @@ RegisterNUICallback(
                 v = CreateVehicle(tonumber(data.modelcar), vec.x,vec.y,vec.z, vec.w, 1, 1)
                 veh = v
                 while not DoesEntityExist(v) do Wait(1) end
+                if presetprimarycolor ~= nil and presetprimarycolor.r ~= nil then
+                    SetVehicleCustomPrimaryColour(v,tonumber(presetprimarycolor.r),tonumber(presetprimarycolor.g),tonumber(presetprimarycolor.b))
+                end
+                if presetsecondarycolor ~= nil and presetsecondarycolor.r ~= nil then
+                    SetVehicleCustomSecondaryColour(v,tonumber(presetsecondarycolor.r),tonumber(presetsecondarycolor.g),tonumber(presetsecondarycolor.b))
+                end
                 if GetVehicleLiveryCount(vehicle) ~= -1 and livery ~= nil then
                     SetVehicleLivery(v,livery)
                 elseif livery ~= nil then
@@ -1568,7 +1729,7 @@ RegisterNUICallback(
                 drawtext = false
                 oldcoord = vector3(VehicleShop[data.shop].shop_x,VehicleShop[data.shop].shop_y,VehicleShop[data.shop].shop_z)
                 indist = false
-                if not Config.UseArenaSpawn or Config.UseArenaSpawn and type ~= 'car' then CloseNui() end
+                if not Config.UseArenaSpawn or Config.UseArenaSpawn then CloseNui() end
                 SendNUIMessage(
                 {
                     type = "cleanup"
@@ -1607,6 +1768,8 @@ RegisterNUICallback(
                 while not HasCollisionLoadedAroundEntity(PlayerPedId()) do Wait(0) end
                 FreezeEntityPosition(PlayerPedId(),false)
                 testdrive = false
+                presetsecondarycolor = {}
+                presetprimarycolor = {}
                 livery = nil
             end)
         else
@@ -1673,6 +1836,8 @@ function CloseNui()
     indist = false
     FreezeEntityPosition(PlayerPedId(),false)
     if not testdrive then
+        presetsecondarycolor = {}
+        presetprimarycolor = {}
         livery = nil
     end
 end
