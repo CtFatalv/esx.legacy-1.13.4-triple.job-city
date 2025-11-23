@@ -33,7 +33,7 @@ Citizen.CreateThread(function()
             EndTextCommandSetBlipName(blip)
         end
     end
-    for k, v in pairs (Refund) do
+  --[[  for k, v in pairs (Refund) do
         if v.Blipss then
             local blip = AddBlipForCoord(v.shop_x, v.shop_y, v.shop_z)
             SetBlipSprite (blip, v.Blip.sprite)
@@ -45,7 +45,7 @@ Citizen.CreateThread(function()
             AddTextComponentSubstringPlayerName("Reprise de Véhicule")
             EndTextCommandSetBlipName(blip)
         end
-    end
+    end]]
 end)
 RegisterNetEvent('renzu_vehicleshop:manage')
 AddEventHandler('renzu_vehicleshop:manage', function(xPlayer)
@@ -124,102 +124,56 @@ function Marker(vec,msg,event,server,dist)
     end
 end
 
-local garageped = nil
-local targetid = nil
-AddTarget = function(data)
-	function onEnter(self)
-		local model = `ig_paper`
-		lib.requestModel(model)
-		garageped = CreatePed(4,model,self.coords.x,self.coords.y,self.coords.z,0.0,false,true)
-		while not DoesEntityExist(garageped) do Wait(0) end
-		SetPedConfigFlag(garageped,17,true)
-        SetEntityInvincible(garageped, true)
-		TaskTurnPedToFaceEntity(garageped,cache.ped,-1)
-		local options = {
-			{
-				name = data.id,
-				onSelect = function()
-					TriggerEvent(data.event)
-				end,
-				icon = 'fas fa-warehouse',
-				label = data.label,
-			}
-		}
-        targetid = exports.ox_target:addLocalEntity(garageped, options)
-	end
-	
-	function onExit(self)
-		DeleteEntity(garageped)
-		if targetid then
-			exports.ox_target:removeZone(targetid)
-		end
-	end
-	
-	function inside(self)
-        local coord = GetEntityCoords(garageped)
-		--DrawMarker(1, coord.x, coord.y, coord.z-0.4, 0.0, 0.0, 0.0, 0.0, 180.0, 0.0, 1.0, 1.0, 1.0, 200, 255, 255, 50, false, true, 2, nil, nil, false)
-	end
-	lib.zones.box({
-		coords = vec3(data.coord.x,data.coord.y,data.coord.z),
-		size = vec3(50, 50, 9),
-		rotation = 45,
-		debug = false,
-		inside = inside,
-		onEnter = onEnter,
-		onExit = onExit
-	})
-end
+local garageped = {}
 
+-- SPAWN AUTOMATIQUE DES PNJ POUR TOUS LES SHOPS
 CreateThread(function()
-    TryOxLib('init')
-    local hastarget = false
-    for k,v in pairs(VehicleShop) do
-        local vec = vector3(v.shop_x,v.shop_y,v.shop_z)
-        local inveh = IsPedInAnyVehicle(PlayerPedId())
-        local dist = #(vec - GetEntityCoords(PlayerPedId()))
-        if GetResourceState('ox_target') == 'started' and GetResourceState('ox_lib') == 'started' then
-            AddTarget({coord = vec, id = 'vehicleshop:'..k, label = v.title, event = 'vehicleshop'})
-            hastarget = true
-        end
-    end
-    while true do
-        neargarage = false
-        for k,v in pairs(VehicleShop) do
-            local vec = vector3(v.shop_x,v.shop_y,v.shop_z)
-            local inveh = IsPedInAnyVehicle(PlayerPedId())
-            local dist = #(vec - GetEntityCoords(PlayerPedId()))
-            if dist < v.Dist and not inveh then
-                neargarage = true
-                if Config.Marker then
-                    --Marker(vec,v.title,'vehicleshop',false,v.Dist)
-                elseif Config.UsePopUI then
-                    --PopUI(v.title or v.name,vec,"vehicleshop")
-                end
-            end
+    Wait(1000) -- laisser le temps aux ressources de démarrer
+    for k, v in pairs(VehicleShop) do
+        if not v.npc or not v.shop_x or not v.shop_y or not v.shop_z then
+            print(("^1[ERREUR] Le shop %s n'a pas de data.npc ou data.coord !^0"):format(k))
+            goto continue
         end
 
-        for k,v in pairs(Refund) do
-            local vec = vector3(v.shop_x,v.shop_y,v.shop_z)
-            local dist = #(vec - GetEntityCoords(PlayerPedId()))
-            local inveh = IsPedInAnyVehicle(PlayerPedId())
-            while dist < v.Dist * 2 and inveh do
-                dist = #(vec - GetEntityCoords(PlayerPedId()))
-                DrawMarker(1, vec ,0,0,0,0,0,2.0,2.0,2.0,1.0,255, 102, 0,200,0,0,0,1)
-                if dist < v.Dist and inveh then
-                    neargarage = true
-                    if Config.Marker then
-                        Marker(vec,"Sell Vehicle",'renzu_vehicleshop:sellvehicle',true,3)
-                    elseif Config.UsePopUI then
-                        PopUI(v.title or v.name,vec,"renzu_vehicleshop:sellvehicle",Config.RefundPercent,true)
-                    end
-                    break
-                end
-                Wait(0)
-            end
+        local model = v.npc
+        local pos = vector4(v.shop_x, v.shop_y, v.shop_z-1, v.shop_h)
+        local heading = v.heading or 0.0
+
+        RequestModel(model)
+        while not HasModelLoaded(model) do
+            Wait(0)
         end
-        Wait(0)
+
+        -- Spawn du ped
+        local ped = CreatePed(4, model, pos, false, true)
+        while not DoesEntityExist(ped) do Wait(0) end
+
+        -- Config du ped
+        SetPedConfigFlag(ped, 17, true)        -- Ne pas réagir
+        SetEntityInvincible(ped, true)         -- Invincible
+        FreezeEntityPosition(ped, true)        -- Bloqué sur place
+        TaskStartScenarioInPlace(ped, "WORLD_HUMAN_CLIPBOARD", 0, true)
+
+        garageped[k] = ped
+
+        -- Ajout ox_target pour interaction
+        if GetResourceState('ox_target') == 'started' then
+            exports.ox_target:addLocalEntity(ped, {
+                {
+                    name  = 'vehicleshop:' .. k,
+                    icon  = 'fas fa-warehouse',
+                    label = v.title or v.name,
+                    onSelect = function()
+                        TriggerEvent('vehicleshop')
+                    end
+                }
+            })
+        end
+
+        ::continue::
     end
 end)
+
 
 function GetVehicleUpgrades(vehicle)
     local stats = {}
@@ -750,7 +704,7 @@ RegisterNUICallback("choosebrands", function(data, cb)
     local cats = {}
     for k,v2 in pairs(Vehicles) do
         for k2,v in pairs(v2) do
-			if data.brand == v.brand and IsModelInCdimage(GetHashKey(v.model)) then
+			if data.brand == v.brand and IsModelInCdimage(GetHashKey(v.model)) and jobcar == false then
                 cars = cars + 1
                 cats[v.brand] = true
                 if vehtable[v.name] == nil then
@@ -777,6 +731,8 @@ RegisterNUICallback("choosebrands", function(data, cb)
                 table.insert(vehtable[v.name], veh)
 				print("1")
 				print("vehtable", json.encode(vehtable))
+            else
+                print("fuck off")
             end
         end
     end
@@ -1559,94 +1515,109 @@ AddEventHandler('renzu_vehicleshop:buyvehicle', function(model,shop,payment,notr
     BuyVehicle(data,notregister)
 end)
 
-function BuyVehicle(data,notregister)
+function BuyVehicle(data, notregister)
     local ped = PlayerPedId()
     local props = nil
     local veh = nil
-    local v = nil
     local hash = tonumber(data.modelcar)
-    local count = 0
     ReqAndDelete(LastVehicleFromGarage)
     DoScreenFadeOut(100)
-    TriggerServerCallback_("renzu_vehicleshop:GenPlate",function(plate)
+
+    TriggerServerCallback_("renzu_vehicleshop:GenPlate", function(plate)
         RequestModel(hash)
         while not HasModelLoaded(hash) do
             RequestModel(hash)
             Citizen.Wait(1)
         end
-        SetEntityCoords(PlayerPedId(), VehicleShop[data.shop].shop_x,VehicleShop[data.shop].shop_y,VehicleShop[data.shop].shop_z, false, false, false, true)
-        Wait(0)
-        v = CreateVehicle(hash, VehicleShop[data.shop].spawn_x,VehicleShop[data.shop].spawn_y,VehicleShop[data.shop].spawn_z, VehicleShop[data.shop].heading, 1, 1)
-        veh = v
-        while not DoesEntityExist(veh) do Wait(10) end
-        SetVehicleNumberPlateText(v,string.gsub(tostring(plate), '^%s*(.-)%s*$', '%1'))
-        if presetprimarycolor ~= nil and presetprimarycolor.r ~= nil then
-            SetVehicleCustomPrimaryColour(v,tonumber(presetprimarycolor.r),tonumber(presetprimarycolor.g),tonumber(presetprimarycolor.b))
-        end
-        if presetsecondarycolor ~= nil and presetsecondarycolor.r ~= nil then
-            SetVehicleCustomSecondaryColour(v,tonumber(presetsecondarycolor.r),tonumber(presetsecondarycolor.g),tonumber(presetsecondarycolor.b))
-        end
-        if GetVehicleLiveryCount(vehicle) ~= -1 and livery ~= nil then
-            SetVehicleLivery(v,livery)
-        elseif livery ~= nil then
-            SetVehicleMod(v, 48, livery, false)
-        end
-        props = GetVehicleProperties(v)
-        props.plate = tostring(plate)
-        SetEntityAlpha(v, 51, false)
-        TaskWarpPedIntoVehicle(PlayerPedId(), v, -1)
-        local successbuy = false
-        TriggerServerCallback_("renzu_vehicleshop:buyvehicle",function(canbuy)
-            if canbuy then
-                successbuy = canbuy
-                for k,v in pairs(VehicleShop) do
-                    local dist = #(vector3(v.spawn_x,v.spawn_y,v.spawn_z) - GetEntityCoords(PlayerPedId()))
-                    if dist <= 70.0 and id == k then
-                        DoScreenFadeOut(333)
-                        ReqAndDelete(LastVehicleFromGarage)
-                        Citizen.Wait(333)
-                        SetEntityCoords(PlayerPedId(), v.shop_x,v.shop_y,v.shop_z, false, false, false, true)
-                        SetVehicleProp(veh, props)
-                        DoScreenFadeIn(111)
-                        NetworkFadeInEntity(veh,1)
-                    end
-                end
 
+        SetEntityCoords(ped, VehicleShop[data.shop].shop_x, VehicleShop[data.shop].shop_y, VehicleShop[data.shop].shop_z, false, false, false, true)
+        Wait(0)
+
+        -- Création du véhicule
+        veh = CreateVehicle(hash, VehicleShop[data.shop].spawn_x, VehicleShop[data.shop].spawn_y, VehicleShop[data.shop].spawn_z, VehicleShop[data.shop].heading, true, false)
+
+        -- Attendre qu'il existe
+        while not DoesEntityExist(veh) do Wait(10) end
+
+        -- Networker le véhicule
+        NetworkRegisterEntityAsNetworked(veh)
+        local gotControl = false
+        local timeout = 0
+        while not gotControl and timeout < 1000 do
+            gotControl = NetworkRequestControlOfEntity(veh)
+            timeout = timeout + 1
+            Wait(10)
+        end
+
+        -- Maintenant on peut changer les propriétés sans erreur
+        SetVehicleNumberPlateText(veh, string.gsub(tostring(plate), '^%s*(.-)%s*$', '%1'))
+
+        if presetprimarycolor ~= nil and presetprimarycolor.r ~= nil then
+            SetVehicleCustomPrimaryColour(veh, tonumber(presetprimarycolor.r), tonumber(presetprimarycolor.g), tonumber(presetprimarycolor.b))
+        end
+
+        if presetsecondarycolor ~= nil and presetsecondarycolor.r ~= nil then
+            SetVehicleCustomSecondaryColour(veh, tonumber(presetsecondarycolor.r), tonumber(presetsecondarycolor.g), tonumber(presetsecondarycolor.b))
+        end
+
+        if GetVehicleLiveryCount(veh) ~= -1 and livery ~= nil then
+            SetVehicleLivery(veh, livery)
+        elseif livery ~= nil then
+            SetVehicleMod(veh, 48, livery, false)
+        end
+
+        props = GetVehicleProperties(veh)
+        props.plate = tostring(plate)
+        SetEntityAlpha(veh, 51, false)
+        TaskWarpPedIntoVehicle(ped, veh, -1)
+        SetVehicleDirtLevel(veh, 0.0)
+        FreezeEntityPosition(veh, false)
+        SetEntityCollision(veh, true)
+
+        local successbuy = false
+        TriggerServerCallback_("renzu_vehicleshop:buyvehicle", function(canbuy)
+            if canbuy then
+                successbuy = true
                 LastVehicleFromGarage = nil
                 CloseNui()
-                ShowNotification("Purchase Success: Plate: "..props.plate.."")
-                SetEntityAlpha(v, 255, false)
-                TaskWarpPedIntoVehicle(PlayerPedId(), veh, -1)
-                i = 0
-                min = 0
-                max = 10
-                plus = 0
-                drawtext = false
-                indist = false
-                SendNUIMessage(
-                {
-                type = "cleanup"
-                })
+                ShowNotification("Purchase Success: Plate: " .. props.plate)
+                SetEntityAlpha(veh, 255, false)
+                TaskWarpPedIntoVehicle(ped, veh, -1)
                 presetsecondarycolor = {}
                 presetprimarycolor = {}
                 livery = nil
-                SetVehicleDirtLevel(veh, 0.0)
             else
                 CloseNui()
-                ReqAndDelete(v)
+                ReqAndDelete(veh)
             end
         end, data.model, props, data.payment, jobcar, type, garage, notregister)
+
+        -- Timeout si achat échoue
         local counter = 0
-        while not successbuy and counter < 5 do counter = counter + 1 Wait (1000) end
+        while not successbuy and counter < 5 do
+            counter = counter + 1
+            Wait(1000)
+        end
         if not successbuy then
             CloseNui()
-            ReqAndDelete(v)
+            ReqAndDelete(veh)
         end
+
         DoScreenFadeIn(1000)
-    end,VehicleShop[data.shop].plateprefix or false)
-    Wait(3000)
-    DoScreenFadeIn(1000)
+    end, VehicleShop[data.shop].plateprefix or false)
 end
+
+
+RegisterNetEvent('renzu_vehicleshop:buyok')
+AddEventHandler('renzu_vehicleshop:buyok', function()
+    local playerPed = GetPlayerPed(-1)
+	local vehicle = GetVehiclePedIsIn(playerPed, false)
+	local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
+    local localVehPlate = GetVehicleNumberPlateText(vehicle)
+    print("vehicleName", json.encode(vehicleName))
+    TriggerServerEvent('ox_carkeys:KeyOnBuy', localVehPlate, vehicleName) 
+	TriggerServerEvent('ox_carkeys:recupsrv', localVehPlate, vehicleName)
+end)
 
 RegisterNUICallback(
     "BuyVehicleCallback",

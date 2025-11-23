@@ -15,7 +15,7 @@ return {
 		owner = true,
 		slots = 70,
 		weight = 70000,
-		groups = shared.police
+		groups = {['police'] = 0}
 	},
 
 	{

@@ -185,7 +185,7 @@ $(document).ready(function() {
     });
 
     var app = '<main id="customextra" style="padding:10px;display:block;">\
-    <header style="text-align:center;padding:5px;"><button onclick="choosecolor(`primary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;background: #414244;color: #fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px !important;height: 100%;margin-right: 20px;">primary</button><button onclick="choosecolor(`secondary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px;height: 100%;">Secondary</button></header>\
+    <header style="text-align:center;padding:5px;"><button onclick="choosecolor(`primary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;background: #414244;color: #fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px !important;height: 100%;margin-right: 20px;">Couleur 1</button><button onclick="choosecolor(`secondary`)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: 1px;height: 100%;">Couleur 2</button></header>\
     <div class="colors" style="height:170px;overflow-x:hidden;"></div>\
     <header style="text-align: center;\
     padding: 6px;\
@@ -193,7 +193,7 @@ $(document).ready(function() {
     color: #fff;\
     padding-bottom: 0;\
     height: 20px;\
-}"> Liveries </header>\
+}"> Autocollants </header>\
     <header style="text-align:center;padding: 6px;"><button onclick="livery(false)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;background: #414244;color: #fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: -10px !important;height: 100%;margin-right: 20px;"><i style="display:contents;" class="fas fa-arrow-left"></i></button><button onclick="livery(true)" class="confirm_out" style="background:#414244;color:#fff !important;border-radius: 10px;width: 30%;/* padding-right: 20px; */height: 20px;font-size: 10px;margin-top: -10px;height: 100%;"> <i style="display:contents;" class="fas fa-arrow-right"></i></button></header>\
   </main>\
   <div class="container">\
@@ -316,7 +316,7 @@ function ShowVehicle(currentTarget) {
             }
             $('#contentVehicle').append(`
                 <div class="row spacebetween">
-                    <span class="title">HANDLING</span>
+                    <span class="title">MANIABILITÉ</span>
                     <span>`+data.handling.toFixed(1)+`</span>
                 </div>
 
@@ -326,7 +326,7 @@ function ShowVehicle(currentTarget) {
                 </div>
 
                 <div class="row spacebetween">
-                    <span class="title">TOP SPEED</span>
+                    <span class="title">VITESSE MAXIMALE</span>
                     <span>`+data.topspeed.toFixed(0)+` KM/H</span>
                 </div>
 
@@ -336,7 +336,7 @@ function ShowVehicle(currentTarget) {
                 </div>
 
                 <div class="row spacebetween">
-                    <span class="title">HORSE POWER</span>
+                    <span class="title">PUISSANCE (CH)</span>
                     <span>`+data.power.toFixed(0)+` HP</span>
                 </div>
 
@@ -346,7 +346,7 @@ function ShowVehicle(currentTarget) {
                 </div>
 
                 <div class="row spacebetween">
-                    <span class="title">TORQUE</span>
+                    <span class="title">COUPLE</span>
                     <span>`+data.torque.toFixed(0)+` TQ</span>
                 </div>
 
@@ -356,7 +356,7 @@ function ShowVehicle(currentTarget) {
                 </div>
 
                 <div class="row spacebetween">
-                    <span class="title">BRAKE</span>
+                    <span class="title">FREINAGE</span>
                     <span>`+data.brake.toFixed(1)+`</span>
                 </div>
 
@@ -383,10 +383,10 @@ function BuyVehicle(n,c,p) {
     $('#closemenu').append(`
         <div class="background-circle"></div>
         <div class="modal-content">
-            <p class="title">Confirm Purchase:</p>
+            <p class="title">Confirmer l'achat:</p>
             <br>
-            <p class="vehicle">Vehicle: `+n+`</p>
-            <p style="float:left;" class="vehicle">Class: `+c+`</p>
+            <p class="vehicle">Modèle: `+n+`</p>
+            <p style="float:left;" class="vehicle">Type: `+c+`</p>
             <p style="float:right;" class="vehicle">$ `+p+`</p>
         </div>
 
@@ -405,7 +405,7 @@ function BuyVehicle(n,c,p) {
             <input type="radio" name="select" id="option-1" checked>
             <label for="option-1" class="option option-1">
             <div class="dot"></div>
-            <span>Banque</span>
+            <span>Acheter</span>
             </label>
             </div>
         </div>
@@ -522,7 +522,7 @@ $(document).on('keydown', function(event) {
             var modelUper = data[i].model;
             var imagecar = data[i].image;
             inGarageVehicle[i] = data[i]
-            $(".app_inner").append('<label style="cursor:pointer;"><input false="" id="tab-'+ i +'" onclick="ShowVehicle('+i+')" name="buttons" type="radio"> <label for="tab-'+ i +'"> <div class="app_inner__tab"> <span style="position:absolute;top:4px;left:8px;font-size:8px;color:#b0b1b1;font-weight: 500;">Class: '+ data[i].category +'</span> <span style="position:absolute;top:4px;right:5px;font-weight: 700;font-size:12px;color:#5ab34f;">Price: '+ data[i].price +'</span><h2 style="font-size:11px !important;"> <i class="icon" style="right:100px;"><img style="height:20px;" src="https://cdn.discordapp.com/attachments/709992715303125023/813351303887192084/wheel.png"></i> '+ data[i].name +' </h2> <div class="tab_left"> <i class="big icon"><img class="imageborder" style="width: 120%;height:80px;height: 80px;border-radius: 10px;border-width: medium;border-color: #fdfdfd;border-style: groove;" onerror="this.src=`https://cdn.discordapp.com/attachments/709992715303125023/813351303887192084/wheel.png`;" src="' + imagecar + '"></i>   </div> <div class="tab_right"> <button class="confirm_out" style="background:#414244" onclick="BuyVehicle(`'+ data[i].name +'`,`'+ data[i].category +'`,`'+ data[i].price +'`)"> Buy </button> <div class="row" id="confirm" style="width: 100%;"> <button class="confirm_out" style="background:#414244;" onclick="TestDrive(`'+ data[i].name +'`,`'+ data[i].category +'`,`'+ data[i].price +'`,`'+ data[i].model +'`)"> Test Drive </button> </div> </div> </div> </label></input></label>');    
+            $(".app_inner").append('<label style="cursor:pointer;"><input false="" id="tab-'+ i +'" onclick="ShowVehicle('+i+')" name="buttons" type="radio"> <label for="tab-'+ i +'"> <div class="app_inner__tab"> <span style="position:absolute;top:4px;left:8px;font-size:8px;color:#b0b1b1;font-weight: 500;">Class: '+ data[i].category +'</span> <span style="position:absolute;top:4px;right:5px;font-weight: 700;font-size:12px;color:#5ab34f;">Price: '+ data[i].price +'</span><h2 style="font-size:11px !important;"> <i class="icon" style="right:100px;"><img style="height:20px;" src="https://thumbs.dreamstime.com/z/ic%C3%B4ne-diagnostique-de-rapport-belle-illustration-simple-d-139738520.jpg?ct=jpeg"></i> '+ data[i].name +' </h2> <div class="tab_left"> <i class="big icon"><img class="imageborder" style="width: 120%;height:80px;height: 80px;border-radius: 10px;border-width: medium;border-color: #fdfdfd;border-style: groove;" onerror="this.src=`https://previews.123rf.com/images/asmati/asmati1601/asmati160101190/50200291-car-icon-vector-white-on-the-black.jpg`;" src="' + imagecar + '"></i>   </div> <div class="tab_right"> <button class="confirm_out" style="background:#414244" onclick="BuyVehicle(`'+ data[i].name +'`,`'+ data[i].category +'`,`'+ data[i].price +'`)"> Acheter </button> <div class="row" id="confirm" style="width: 100%;"> <button class="confirm_out" style="background:#414244;" onclick="TestDrive(`'+ data[i].name +'`,`'+ data[i].category +'`,`'+ data[i].price +'`,`'+ data[i].model +'`)"> Essayer </button> </div> </div> </div> </label></input></label>');    
         }     
     }
     renzu_vehicleshop.Open(VehicleArr)

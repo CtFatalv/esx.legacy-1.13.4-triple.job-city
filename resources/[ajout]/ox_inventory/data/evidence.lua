@@ -8,7 +8,8 @@ return {
 			width = 3.2,
 			heading = 0,
 			minZ = 29.09,
-			maxZ = 31.89
+			maxZ = 31.89,
+            debug = false
 		}
 	}
 }

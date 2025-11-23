@@ -81,6 +81,11 @@ AddEventHandler('renzu_vehicleshop:sellvehicle', function()
     end
 end)
 
+RegisterServerEvent('ox_carkeys:recupsrv')
+AddEventHandler('ox_carkeys:recupsrv', function(localVehPlate, vehicleName)
+	print('Concessionnaire: Véhicule acheté',json.encode(localVehPlate),json.encode(vehicleName))
+end)
+
 local Charset = {}
 for i = 65,  90 do table.insert(Charset, string.char(i)) end
 for i = 97, 122 do table.insert(Charset, string.char(i)) end
@@ -171,6 +176,7 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
             if not job or job == false then
                 xPlayer.removeAccountMoney('bank', tonumber(price))
                 print("paiement joueur effectué")
+                TriggerClientEvent("renzu_vehicleshop:buyok", xPlayer.source)
             else
                 -- Paiement entreprise synchronisé
                 local done = false
@@ -178,6 +184,7 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
                 TriggerEvent('esx_addonaccount:getSharedAccount', 'society_'..job, function(account)
                     if account.money >= tonumber(price) then
                         account.removeMoney(tonumber(price))
+                		TriggerClientEvent("renzu_vehicleshop:buyok", xPlayer.source)
                         print("retrait effectué société", job)
                         success = true
                     else
