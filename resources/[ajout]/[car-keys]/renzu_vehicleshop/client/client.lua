@@ -131,7 +131,7 @@ CreateThread(function()
     Wait(1000) -- laisser le temps aux ressources de démarrer
     for k, v in pairs(VehicleShop) do
         if not v.npc or not v.shop_x or not v.shop_y or not v.shop_z then
-            print(("^1[ERREUR] Le shop %s n'a pas de data.npc ou data.coord !^0"):format(k))
+            -- print(("^1[ERREUR] Le shop %s n'a pas de data.npc ou data.coord !^0"):format(k))
             goto continue
         end
 
@@ -729,10 +729,10 @@ RegisterNUICallback("choosebrands", function(data, cb)
                     grade = v.grade,
                 }
                 table.insert(vehtable[v.name], veh)
-				print("1")
-				print("vehtable", json.encode(vehtable))
+				-- print("1")
+				-- print("vehtable", json.encode(vehtable))
             else
-                print("fuck off")
+                -- print("fuck off")
             end
         end
     end
@@ -830,8 +830,8 @@ RegisterNUICallback("choosecategory", function(data, cb)
 				grade = v.grade,
                 }
                 table.insert(vehtable[v.name], veh)
-				print("2")
-				print("vehtable", json.encode(vehtable))
+				-- print("2")
+				-- print("vehtable", json.encode(vehtable))
             elseif jobcar == false then
                 cars = cars + 1
                 cats[v.category] = true
@@ -858,8 +858,8 @@ RegisterNUICallback("choosecategory", function(data, cb)
 				grade = v.grade,
                 }
                 table.insert(vehtable[v.name], veh)
-				print("2")
-				print("vehtable", json.encode(vehtable))
+				-- print("2")
+				-- print("vehtable", json.encode(vehtable))
             end
         end
     end
@@ -926,7 +926,7 @@ PopulateVehicleshop = function(k)
     vehiclesdb = tb
     local gstate = GlobalState and GlobalState.VehicleImages
     for _,value in pairs(tb) do
-        print("tb", json.encode(tb))
+        -- print("tb", json.encode(tb))
         --local props = json.decode(value.vehicle)
         local vehicleModel = joaat(value.model)
         if IsModelInCdimage(vehicleModel) then
@@ -973,8 +973,8 @@ PopulateVehicleshop = function(k)
                 grade = value.grade
             }
             table.insert(Vehicles[value.brand], VTable)
-            print("3")
-            print("Vehicles", json.encode(Vehicles))
+            -- print("3")
+            -- print("Vehicles", json.encode(Vehicles))
         end
     end
     SendNUIMessage(
@@ -1004,7 +1004,7 @@ function OpenShop(id, v)
     FreezeEntityPosition(PlayerPedId(),true)
     if not Config.Quickpick then
         if v.type == "car" then
-            print("shell")
+            -- print("shell")
         	CreateGarageShell()
         end
     end
@@ -1026,9 +1026,9 @@ function OpenShop(id, v)
     local playerGrade = playerData.job.grade
     for k,v2 in pairs(Vehicles) do
         for k2,v in pairs(v2) do
-            print("jobcar", jobcar)
+            -- print("jobcar", jobcar)
         	if id == v.shop and IsModelInCdimage(GetHashKey(v.model)) and playerJob == v.job and playerGrade >= v.grade then
-            print("jobcar 1", jobcar)
+            -- print("jobcar 1", jobcar)
                 cars = cars + 1
                 if vehtable[v.name] == nil then
                     vehtable[v.name] = {}
@@ -1051,11 +1051,11 @@ function OpenShop(id, v)
                     grade = v.grade
                 }
                 table.insert(vehtable[v.name], veh)
-                print("4")
-                print("jobcar", jobcar)
-                print("vehtable", json.encode(vehtable))
+                -- print("4")
+                -- print("jobcar", jobcar)
+                -- print("vehtable", json.encode(vehtable))
 			elseif jobcar == false then
-            print("jobcar 2", jobcar)
+            -- print("jobcar 2", jobcar)
 				cars = cars + 1
                 if vehtable[v.name] == nil then
                     vehtable[v.name] = {}
@@ -1078,9 +1078,9 @@ function OpenShop(id, v)
                     grade = v.grade
                 }
                 table.insert(vehtable[v.name], veh)
-                print("4")
-                print("jobcar", jobcar)
-                print("vehtable", json.encode(vehtable))
+                -- print("4")
+                -- print("jobcar", jobcar)
+                -- print("vehtable", json.encode(vehtable))
                 
             end
         end
@@ -1104,10 +1104,10 @@ function OpenShop(id, v)
         if not Config.Quickpick then
             RequestCollisionAtCoord(2800.5966796875,-3799.7370605469,139.41514587402)
             for k,v in pairs(VehicleShop) do
-                print('VehicleShopici', json.encode(VehicleShop))
-                print('v', json.encode(v))
-                print('v.type', json.encode(v.type))
-                print('k', json.encode(k))
+                -- print('VehicleShopici', json.encode(VehicleShop))
+                -- print('v', json.encode(v))
+                -- print('v.type', json.encode(v.type))
+                -- print('k', json.encode(k))
                 local dist = #(vector3(v.shop_x,v.shop_y,v.shop_z) - GetEntityCoords(ped))
                 if Config.UseArenaSpawn then
                     vec = vector3(2800.5966796875,-3799.7370605469,139.41514587402)
@@ -1127,9 +1127,9 @@ function OpenShop(id, v)
                     end
                 else
                     if dist <= 40.0 and id == v.name then
-                        print("pos joueur")
+                        -- print("pos joueur")
                         if v.type == "car" then
-                            print("1.1")
+                            -- print("1.1")
                             shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
                             cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-5.0, v.shop_y-3.0, v.shop_z-28.5, 360.00, 0.00, 0.00, 60.00, false, 0)
                             PointCamAtCoord(cam, v.shop_x, v.shop_y, v.shop_z-30.0)
@@ -1142,7 +1142,7 @@ function OpenShop(id, v)
                             DisplayRadar(false)
                             break
                         elseif v.type == 'boat' then
-                            print("2.2")
+                            -- print("2.2")
                             shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
                             cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-5.0, v.shop_y-3.0, v.shop_z-29.0, 360.00, 0.00, 0.00, 60.00, false, 0)
                             --cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-17.0, v.shop_y-15.0, v.shop_z-15.0, 0.0, 0.0, 0.0, 60.0, false, 0)
@@ -1156,7 +1156,7 @@ function OpenShop(id, v)
                             DisplayRadar(false)
                             break
 						else
-                            print("3.3")
+                            -- print("3.3")
                             shopcoords = vector3(v.shop_x,v.shop_y,v.shop_z)
                             cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-13.0, v.shop_y-10.0, v.shop_z-30.0, 360.00, 0.00, 0.00, 60.00, false, 0)
                             --cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", v.shop_x-17.0, v.shop_y-15.0, v.shop_z-15.0, 0.0, 0.0, 0.0, 60.0, false, 0)
@@ -1215,7 +1215,7 @@ function inShowRoom(bool)
             Citizen.Wait(0)
             --NetworkOverrideClockTime(22, 00, 00)
         end
-            --print("NetworkOverrideClockTime", json.encode(NetworkOverrideClockTime))
+            ---- print("NetworkOverrideClockTime", json.encode(NetworkOverrideClockTime))
     elseif bool == 'exit' then
         inshell = false
     end
@@ -1251,7 +1251,7 @@ end
 local shell = nil
 local arenacoord = vector4(2800.55,-3799.73,139.41,244.54)
 function CreateGarageShell()
-    print("Shell ok")
+    -- print("Shell ok")
     local ped = PlayerPedId()
     garage_coords = GetEntityCoords(ped)-vector3(0,0,30.0)
     local model = GetHashKey('garage')
@@ -1462,9 +1462,9 @@ function SpawnVehicleLocal(model)
             else
                 vec = vector3(v.shop_x,v.shop_y,zaxis - 30.0)
             end
-            print("pos véhicule")
+            -- print("pos véhicule")
             if v.type == 'car' then
-                print("ici car")
+                -- print("ici car")
                 LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z, 90.0, false, true)
                 while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
                 SetEntityHeading(LastVehicleFromGarage, 90.117)
@@ -1474,7 +1474,7 @@ function SpawnVehicleLocal(model)
                 --SetVehicleProp(LastVehicleFromGarage, props)
                 currentcar = LastVehicleFromGarage
 			elseif v.type == 'boat' then
-                print("ici Boat")
+                -- print("ici Boat")
                 LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z-10, 90.0, false, true)
                 while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
                 SetEntityHeading(LastVehicleFromGarage, 90.117)
@@ -1484,7 +1484,7 @@ function SpawnVehicleLocal(model)
             	--SetVehicleProp(LastVehicleFromGarage, props)
                 currentcar = LastVehicleFromGarage
 			else
-                print("nop car")
+                -- print("nop car")
                 LastVehicleFromGarage = CreateVehicle(hash, vec.x,vec.y,vec.z-10, 90.0, false, true)
                 while not DoesEntityExist(LastVehicleFromGarage) do Wait(0) end
                 SetEntityHeading(LastVehicleFromGarage, 90.117)
@@ -1614,7 +1614,7 @@ AddEventHandler('renzu_vehicleshop:buyok', function()
 	local vehicle = GetVehiclePedIsIn(playerPed, false)
 	local vehicleName = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
     local localVehPlate = GetVehicleNumberPlateText(vehicle)
-    print("vehicleName", json.encode(vehicleName))
+    -- print("vehicleName", json.encode(vehicleName))
     TriggerServerEvent('ox_carkeys:KeyOnBuy', localVehPlate, vehicleName) 
 	TriggerServerEvent('ox_carkeys:recupsrv', localVehPlate, vehicleName)
 end)
