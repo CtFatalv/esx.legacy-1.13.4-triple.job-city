@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.3
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : sam. 27 juil. 2024 à 22:13
--- Version du serveur : 10.11.8-MariaDB-ubu2204
--- Version de PHP : 8.1.29
+-- Généré le : ven. 05 déc. 2025 à 17:26
+-- Version du serveur : 10.11.13-MariaDB-0ubuntu0.24.04.1
+-- Version de PHP : 8.3.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -385,7 +385,15 @@ INSERT INTO `licenses` (`type`, `label`) VALUES
 ('permis_moto', 'Permis Moto'),
 ('permis_voiture', 'Permis Voiture'),
 ('t_weapon', 'Licence Théorique Arme'),
-('weapon', 'Permis Arme');
+('weapon', 'Permis Arme'),
+('weapon_assault_rifles', 'Licence illégale Fusils d\'Assaut'),
+('weapon_handguns', 'Licence illégale Pistolet'),
+('weapon_heavy_weapons', 'Licence illégale Armes Lourdes'),
+('weapon_machine_guns', 'Licence illégale Mitrailleuses'),
+('weapon_shotguns', 'Licence illégale Fusils à Pompe'),
+('weapon_smg', 'Licence illégale SMG'),
+('weapon_sniper_rifles', 'Licence illégale Fusils de Sniper'),
+('weapon_throwables', 'Licence illégale Armes à Lancer');
 
 -- --------------------------------------------------------
 
@@ -397,6 +405,20 @@ CREATE TABLE `multicharacter_slots` (
   `identifier` varchar(46) NOT NULL,
   `slots` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `owned_etabli`
+--
+
+CREATE TABLE `owned_etabli` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `identifier` varchar(128) NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `rotation` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -694,6 +716,13 @@ ALTER TABLE `multicharacter_slots`
   ADD KEY `slots` (`slots`) USING BTREE;
 
 --
+-- Index pour la table `owned_etabli`
+--
+ALTER TABLE `owned_etabli`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `identifier` (`identifier`);
+
+--
 -- Index pour la table `owned_shops`
 --
 ALTER TABLE `owned_shops`
@@ -806,7 +835,13 @@ ALTER TABLE `fine_types`
 -- AUTO_INCREMENT pour la table `job_grades`
 --
 ALTER TABLE `job_grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+
+--
+-- AUTO_INCREMENT pour la table `owned_etabli`
+--
+ALTER TABLE `owned_etabli`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `owned_shops`

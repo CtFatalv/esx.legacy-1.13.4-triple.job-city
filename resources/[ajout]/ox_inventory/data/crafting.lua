@@ -138,6 +138,16 @@ return {
 				count = 1,
 			},
 			{
+				name = 'lingotacier',
+				ingredients = {
+					m_fer = 3,
+					m_titane = 2,
+					WEAPON_HAMMER = 0.05
+				},
+				duration = 5000,
+				count = 1,
+			},
+			{
 				name = 'lingotfer',
 				ingredients = {
 					pioche_cassee_fer = 1,
@@ -168,6 +178,17 @@ return {
 				name = 'pioche_titane',
 				ingredients = {
 					lingottitane = 2,
+					WEAPON_HAMMER = 0.05
+				},
+				duration = 5000,
+				count = 1,
+			},
+			{
+				name = 'w_etabli',
+				ingredients = {
+					lingotacier = 5,
+					lingotcuivre = 5,
+					planche = 5,
 					WEAPON_HAMMER = 0.05
 				},
 				duration = 5000,

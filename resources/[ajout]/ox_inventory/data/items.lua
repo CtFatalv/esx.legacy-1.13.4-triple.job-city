@@ -1,8 +1,26 @@
 return {
     
+    ['w_circuit'] = {
+        label = 'Circuit Imprimé',
+        weight = 100,
+        stack = true,
+    },
+
+    ['w_douille'] = {
+        label = 'Douille de munition',
+        weight = 100,
+        stack = true,
+    },
+
+    ['w_poudrecanon'] = {
+        label = 'Poudre à Canon',
+        weight = 100,
+        stack = true,
+    },
+    
     ['w_etabli'] = {
         label = 'Atelier D\'arme',
-        weight = 100,
+        weight = 10000,
         stack = true,
     },
 
@@ -30,20 +48,8 @@ return {
         stack = true,
     },
 
-    ['w_verre'] = {
-        label = 'Verre',
-        weight = 100,
-        stack = true,
-    },
-
     ['w_ampoule'] = {
         label = 'Ampoule',
-        weight = 100,
-        stack = true,
-    },
-
-    ['w_pile'] = {
-        label = 'Pile',
         weight = 100,
         stack = true,
     },
@@ -209,13 +215,7 @@ return {
         weight = 100,
         stack = true,
     },
-    
-    ['w_batterie_iem'] = {
-        label = 'Batterie IEM',
-        weight = 100,
-        stack = true,
-    },
-    
+
     ['w_corps_grenade'] = {
         label = 'Corps de grenade',
         weight = 100,
@@ -258,14 +258,32 @@ return {
         stack = true,
     },
     
-    ['w_tube_titane'] = {
-        label = 'Tube en Titane',
+    ['w_poudre'] = {
+        label = 'Poudre',
         weight = 100,
         stack = true,
     },
     
-    ['w_boule_de_peau'] = {
-        label = 'Boule de peau',
+    ['w_melange_toxic'] = {
+        label = 'Mélange toxique',
+        weight = 100,
+        stack = true,
+    },
+    
+    ['w_fertilisant_liquide'] = {
+        label = 'Fertilisant liquide',
+        weight = 100,
+        stack = true,
+    },
+    
+    ['w_corde'] = {
+        label = 'Corde',
+        weight = 100,
+        stack = true,
+    },
+    
+    ['w_peau_tannee_cousu'] = {
+        label = 'Peau tanné cousu',
         weight = 100,
         stack = true,
     },
