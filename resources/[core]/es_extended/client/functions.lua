@@ -1332,6 +1332,7 @@ local mismatchedTypes = {
     [`utillitruck`] = "automobile", -- trailer
     [`utillitruck2`] = "automobile", -- trailer
     [`utillitruck3`] = "automobile", -- trailer
+    [`flatbed3`] = "automobile", -- trailer
 }
 
 ---@param model number|string
