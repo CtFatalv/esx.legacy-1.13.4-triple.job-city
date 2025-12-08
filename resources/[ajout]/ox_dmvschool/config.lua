@@ -145,7 +145,7 @@ Config.Question = {
             }
         },
         {
-            label = "Quelle est la limite de vitesse en zone urbaine ?",
+            label = "Quelle est la limite de vitesse en zone résidentielle ?",
             options = {
                 {
                     label = "50 km/h",
