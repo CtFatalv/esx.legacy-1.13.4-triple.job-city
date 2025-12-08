@@ -330,21 +330,21 @@ return {
         close = true,
     },
 
-    ['driver_license_voiture'] = {
+    ['permis_voiture'] = {
         label = 'Permis Voiture',
         weight = 0,
         stack = false,
         close = true,
     },
 
-    ['driver_license_moto'] = {
+    ['permis_moto'] = {
         label = 'Permis Moto',
         weight = 0,
         stack = false,
         close = true,
     },
 
-    ['driver_license_camion'] = {
+    ['permis_camion'] = {
         label = 'Permis Camion',
         weight = 0,
         stack = false,
