@@ -274,7 +274,7 @@ SetUpMarker = function()
             end
 
             local distance = GetDistanceBetweenCoords(targetCoords.x, targetCoords.y, targetCoords.z, GetEntityCoords(PlayerPedId()), true)
-            if distance < 1.5 then
+            if distance < 2.5 then
                 -- supprimer le blip dès que le point est atteint
                 if currentBlip ~= nil then
                     RemoveBlip(currentBlip)
