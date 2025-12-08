@@ -28,8 +28,8 @@ Config.License = {
         id = 'permis_moto',
         img = 'bike.png',
         pricing = {
-            theory = 2500,
-            practice = 3000
+            theory = 500,
+            practice = 1000
         },
         vehicle = {
             model = 'sanchez',
@@ -58,8 +58,8 @@ Config.License = {
         id = 'permis_camion',
         img = 'truck.png',
         pricing = {
-            theory = 5000,
-            practice = 6000
+            theory = 2500,
+            practice = 3000
         },
         vehicle = {
             model = 'mule3',
