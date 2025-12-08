@@ -128,7 +128,7 @@ Config.Question = {
             }
         },
         {
-            label = "Que signifie une ligne continue au bord de la route ?",
+            label = "Que signifie une ligne continue au milieu de la route ?",
             options = {
                 {
                     label = "Dépassement autorisé",
