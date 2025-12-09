@@ -19,7 +19,7 @@ Config.blip = {
     Name = 'Auto-École'
 }
 
-Config.PuntiMinimi = 0 -- Minimum points to pass the theory test
+Config.PuntiMinimi = 15 -- Minimum points to pass the theory test
 
 -- ATTENTION: Modifying the id after a user has already obtained a license causes them to be lost
 Config.License = {
