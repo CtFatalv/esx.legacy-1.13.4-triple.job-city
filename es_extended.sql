@@ -629,7 +629,9 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `last_seen` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `pincode` int(11) DEFAULT NULL,
-  `phone_number` int(11) DEFAULT NULL
+  `phone_number` int(11) DEFAULT NULL,
+  `ip` varchar(45) DEFAULT '0.0.0.0'
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

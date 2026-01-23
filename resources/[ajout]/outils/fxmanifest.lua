@@ -1,5 +1,5 @@
 fx_version 'cerulean'
-games {'gta5'}
+game 'gta5'
 
 client_scripts {
 	'config.lua',
@@ -7,7 +7,13 @@ client_scripts {
 }
 
 server_scripts {
-    'server/*.lua',
+	'@async/async.lua',
+	'@mysql-async/lib/MySQL.lua',
+    'server/*.lua'
 }
 
 shared_script '@es_extended/imports.lua'
+
+dependencies {
+	'async'
+}
