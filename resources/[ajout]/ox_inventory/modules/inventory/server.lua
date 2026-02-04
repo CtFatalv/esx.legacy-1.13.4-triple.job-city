@@ -438,10 +438,6 @@ function Inventory.SlotWeight(item, slot, ignoreCount)
 		end
 	end
 
-    if item.hash == `WEAPON_PETROLCAN` then
-        slot.metadata.weight = 15000 * (slot.metadata.ammo / 100)
-    end
-
 	if slot.metadata.components then
 		for i = #slot.metadata.components, 1, -1 do
 			local componentWeight = Items(slot.metadata.components[i])?.weight
