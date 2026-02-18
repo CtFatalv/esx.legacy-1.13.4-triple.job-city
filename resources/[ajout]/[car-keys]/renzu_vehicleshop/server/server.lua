@@ -45,7 +45,7 @@ function Deleteveh(plate,src)
     if plate and type(plate) == 'string' then
         CustomsSQL(Config.Mysql,'execute','DELETE FROM '..vehicletable..' WHERE TRIM(UPPER(plate)) = @plate',{['@plate'] = plate})
     else
-        -- print('error not string - Delete Vehicle')
+        --print('error not string - Delete Vehicle')
     end
 end
 
@@ -73,7 +73,7 @@ AddEventHandler('renzu_vehicleshop:sellvehicle', function()
                     TriggerClientEvent('sellvehiclecallback',xPlayer.source)
                 end
         else
-            -- print("EXPLOIT")
+            --print("EXPLOIT")
             xPlayer.showNotification('Are you really sure this is the vehicle?',1,0,110)
         end
     else
@@ -83,7 +83,7 @@ end)
 
 RegisterServerEvent('ox_carkeys:recupsrv')
 AddEventHandler('ox_carkeys:recupsrv', function(localVehPlate, vehicleName)
-	-- print('Concessionnaire: Véhicule acheté',json.encode(localVehPlate),json.encode(vehicleName))
+	print('Concessionnaire: Véhicule acheté',json.encode(localVehPlate),json.encode(vehicleName))
 end)
 
 local Charset = {}
@@ -141,7 +141,7 @@ end)
 local temp = {}
 
 function Buy(result, xPlayer, model, props, payment, job, type, garage, notregister)
-    -- print("Buy")
+    --print("Buy")
     local bool = false
     local price, stock
 
@@ -170,12 +170,12 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
 
         stock = 999
         if canPay then
-            -- print("money disponible")
+            --print("money disponible")
 
             -- Paiement
             if not job or job == false then
                 xPlayer.removeAccountMoney('bank', tonumber(price))
-                -- print("paiement joueur effectué")
+                --print("paiement joueur effectué")
                 TriggerClientEvent("renzu_vehicleshop:buyok", xPlayer.source)
             else
                 -- Paiement entreprise synchronisé
@@ -185,11 +185,11 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
                     if account.money >= tonumber(price) then
                         account.removeMoney(tonumber(price))
                 		TriggerClientEvent("renzu_vehicleshop:buyok", xPlayer.source)
-                        -- print("retrait effectué société", job)
+                        --print("retrait effectué société", job)
                         success = true
                     else
                         xPlayer.showNotification("La société n'a pas assez d'argent")
-                        -- print("retour entreprise pas assez d'argent")
+                        --print("retour entreprise pas assez d'argent")
                         success = false
                     end
                     done = true
@@ -216,7 +216,7 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
                 parkingName = "SandyShoresBoat"
             end
 
-            -- print("type", type, "parking choisi", parkingName)
+            --print("type", type, "parking choisi", parkingName)
 
             stock = stock - 1
 
@@ -246,7 +246,7 @@ function Buy(result, xPlayer, model, props, payment, job, type, garage, notregis
             bool = false
         end
     else
-        -- print("Le véhicule n'existe pas")
+        --print("Le véhicule n'existe pas")
         xPlayer.showNotification('Vehicle does not Exist', 1, 0, 110)
         bool = false
     end
@@ -258,7 +258,7 @@ end
 
 RegisterServerEvent('ox_carkeys:recupsrv')
 AddEventHandler('ox_carkeys:recupsrv', function(localVehPlate, vehicleName)
-	-- print('Concessionnaire: Véhicule acheté',json.encode(localVehPlate),json.encode(vehicleName))
+	print('Concessionnaire: Véhicule acheté',json.encode(localVehPlate),json.encode(vehicleName))
 end)
 
 local Charset = {}

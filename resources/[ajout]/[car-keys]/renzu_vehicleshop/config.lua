@@ -11,6 +11,7 @@ Config.Licensed = false -- Enable Driver Licensed Checker
 Config.DisplayCars = true -- enable display of cars
 Config.Marker = true -- use draw marker and Iscontrollpress native , popui will not work if this is true
 
+Config.category = true -- true = voir par catégorie // false = voir par marque
 -- VEHICLE THUMBNAILS IMAGE
 -- this is standalone
 Config.CustomImg = false -- if true your Config.CustomImgColumn IMAGE url will be used for each vehicles else, the imgs/uploads/MODEL.jpg
