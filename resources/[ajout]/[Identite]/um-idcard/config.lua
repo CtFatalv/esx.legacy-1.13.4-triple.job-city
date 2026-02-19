@@ -3,14 +3,14 @@ Config = {};
 Config.IdCardSettings = {
    closeKey = 'Backspace',
    autoClose = {
-      status = false, -- or true
+      status = false,
       time = 3000
    }
 };
 
 Config.Licenses = {
    ['id_card'] = {
-      header = 'Identity',
+      header = 'Identité',
       background = '#ebf7fd',
       prop = 'prop_franklin_dl'
    },

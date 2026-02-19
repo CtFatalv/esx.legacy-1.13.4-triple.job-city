@@ -5,8 +5,7 @@ lua54 'yes'
 version '2.0.2'
 
 client_scripts {
-	"client/gizmo.lua",
-	'client/test.lua'
+	"client/gizmo.lua"
 }
 
 shared_scripts {
@@ -16,8 +15,6 @@ shared_scripts {
 files {
 	'client/dataview.lua',
 }
-
-server_script 'version.lua'
 
 dependencies {
 	'ox_lib'
