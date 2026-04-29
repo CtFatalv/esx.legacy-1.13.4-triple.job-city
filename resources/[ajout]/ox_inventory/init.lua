@@ -23,7 +23,7 @@ shared = {
 }
 
 shared.dropslots = GetConvarInt('inventory:dropslots', shared.playerslots)
-shared.dropweight = GetConvarInt('inventory:dropslotcount', shared.playerweight)
+shared.dropweight = GetConvarInt('inventory:dropweight', shared.playerweight)
 
 do
     if type(shared.police) == 'string' then
@@ -66,6 +66,12 @@ if IsDuplicityVersion() then
 				["burger", 1, 1]
 			]
 		]])),
+        validhosts = json.decode(GetConvar('inventory:validhosts', [[
+			{
+                "r2.fivemanage.com": true,
+                "i.fmfile.com": true
+            }
+		]])),
     }
 
     local accounts = json.decode(GetConvar('inventory:accounts', '["money"]'))
@@ -93,6 +99,8 @@ else
         ignoreweapons = json.decode(GetConvar('inventory:ignoreweapons', '[]')),
         suppresspickups = GetConvarInt('inventory:suppresspickups', 1) == 1,
         disableweapons = GetConvarInt('inventory:disableweapons', 0) == 1,
+        disablesetupnotification = GetConvarInt('inventory:disablesetupnotification', 0) == 1,
+        enablestealcommand = GetConvarInt('inventory:enablestealcommand', 1) == 1,
     }
 
     local ignoreweapons = table.create(0, (client.ignoreweapons and #client.ignoreweapons or 0) + 3)
@@ -109,6 +117,44 @@ else
     ignoreweapons[`WEAPON_HOSE`] = true
 
     client.ignoreweapons = ignoreweapons
+
+    local fallbackmarker = {
+        type = 0,
+        colour = { 150, 150, 150 },
+        scale = { 0.5, 0.5, 0.5 }
+    }
+
+    client.shopmarker = json.decode(GetConvar('inventory:shopmarker', [[
+        {
+            "type": 29,
+            "colour": [30, 150, 30],
+            "scale": [0.5, 0.5, 0.5]
+        }
+    ]])) or fallbackmarker
+
+    client.evidencemarker = json.decode(GetConvar('inventory:evidencemarker', [[
+        {
+            "type": 2,
+            "colour": [30, 30, 150],
+            "scale": [0.3, 0.2, 0.15]
+        }
+    ]])) or fallbackmarker
+
+    client.craftingmarker = json.decode(GetConvar('inventory:craftingmarker', [[
+        {
+            "type": 2,
+            "colour": [150, 150, 30],
+            "scale": [0.3, 0.2, 0.15]
+        }
+    ]])) or fallbackmarker
+
+    client.dropmarker = json.decode(GetConvar('inventory:dropmarker', [[
+        {
+            "type": 2,
+            "colour": [150, 30, 30],
+            "scale": [0.3, 0.2, 0.15]
+        }
+    ]])) or fallbackmarker
 end
 
 function shared.print(...) print(string.strjoin(' ', ...)) end
