@@ -12,7 +12,7 @@ Config.locale = "fr"							-- Set the file language [en/br/de/es/fr/no/fr/zh-cn/
 
 Config.format = {
 	['currency'] = 'USD',						-- This is the currency format, so that your currency symbol appears correctly [Examples: BRL, USD, EUR] (Currency codes: https://taxsummaries.pwc.com/glossary/currency-codes)
-	['location'] = 'en-US'						-- This is the location of your country, to format the decimal places according to your standard [Examples: pt-BR, en-US] (Language codes: http://www.lingoes.net/en/translator/langcode.htm)
+	['location'] = 'fr-FR'						-- This is the location of your country, to format the decimal places according to your standard [Examples: pt-BR, en-US] (Language codes: http://www.lingoes.net/en/translator/langcode.htm)
 }
 
 -- Here, you can easily switch between the available script compatibilities.
@@ -60,6 +60,10 @@ Config.spawned_vehicles = {						-- Config for the vehicles that are spawned in 
 	['lc_fishing_simulator'] = {
 		['is_static'] = false,
 		['plate_prefix'] = "FS"
+	},
+	['lc_farming_simulator'] = {
+		['is_static'] = false,
+		['plate_prefix'] = "FA"
 	}
 }
 

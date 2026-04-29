@@ -334,9 +334,9 @@ Citizen.CreateThread(function()
 	Utils.loadLanguageFile(Utils.Lang)
 
 	if Utils.Version then
-		--print("^2[lc_utils] Loaded! Support discord: https://discord.gg/U5YDgbh ^3[v"..Utils.Version.."]^7")
+		print("^2[lc_utils] Loaded! Support discord: https://discord.gg/U5YDgbh ^3[v"..Utils.Version.."]^7")
 	else
-		--error("^1[lc_utils] Warning: Could not load the version file.^7")
+		error("^1[lc_utils] Warning: Could not load the version file.^7")
 	end
 
 	assert(Config, "^3You have errors in your config file, consider fixing it or redownload the original config.^7")
