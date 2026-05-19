@@ -817,21 +817,6 @@ CreateThread(function()
 	end
 end)
 
--- Create Blips
-CreateThread(function()
-	local blip = AddBlipForCoord(Config.Zones.MechanicActions.Pos.x, Config.Zones.MechanicActions.Pos.y, Config.Zones.MechanicActions.Pos.z)
-
-	SetBlipSprite (blip, 446)
-	SetBlipDisplay(blip, 4)
-	SetBlipScale  (blip, 0.7)
-	SetBlipColour (blip, 5)
-	SetBlipAsShortRange(blip, true)
-
-	BeginTextCommandSetBlipName('STRING')
-	AddTextComponentSubstringPlayerName(TranslateCap('mechanic'))
-	EndTextCommandSetBlipName(blip)
-end)
-
 -- Display markers
 CreateThread(function()
 	while true do
@@ -1002,40 +987,6 @@ end, false)
 
 AddEventHandler('esx:onPlayerDeath', function(data) isDead = true end)
 AddEventHandler('esx:onPlayerSpawn', function(spawn) isDead = false end)
-
-local options = {
-    {
-        name = 'Achat',
-        event = 'necro:shop01',
-        icon = 'fa-solid fa-road',
-        label = 'Achat',
-		distance = 1.6,
-    },
-}label = 'Gestion',
-exports.ox_target:addLocalEntity(UwU, options)
-
-exports.ox_target:addBoxZone({
-    coords =  vector3(-345.9, -122.87, 39.01),
-    size = vec3(1.2, 0.2, 2.4),
-    rotation = 251,
-    debug = false,
-    options = {
-        {
-            name = 'Gestion',
-            event = 'esx_mechanicjob:bossmecano',
-            icon = 'fa-solid fa-computer',
-            label = 'Gestion',
-			distance = 1.5,
-        }
-    }
-})
-
-AddEventHandler('esx_mechanicjob:bossmecano', function()	
-    if ESX.PlayerData.job and ESX.PlayerData.job.name == 'mechanic' then
-	TriggerEvent('esx_society:openBossMenu', 'mechanic', function(data, menu)
-	end, {wash = false})
-	end
-end)
 
 AddEventHandler('esx_mechanicjob:mechanicinteraction', function()	
     if ESX.PlayerData.job and ESX.PlayerData.job.name == 'mechanic' then

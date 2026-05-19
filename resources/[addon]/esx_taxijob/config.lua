@@ -17,15 +17,6 @@ Config.AuthorizedVehicles = {
 	{model = 'taxi', label = 'Taxi'}
 }
 
-Config.Zones = {
-	TaxiActions = {
-		Pos   = {x = 903.32, y = -170.55, z = 74.0},
-		Size  = {x = 1.0, y = 1.0, z = 1.0},
-		Color = {r = 204, g = 204, b = 0},
-		Type  = 20, Rotate = true
-	}
-}
-
 Config.JobLocations = {
 	vector3(293.5, -590.2, 42.7),
 	vector3(253.4, -375.9, 44.1),

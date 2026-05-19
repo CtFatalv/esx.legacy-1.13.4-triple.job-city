@@ -1833,35 +1833,60 @@ RegisterNUICallback(
 )
 
 
-RegisterNUICallback("Close",function(data, cb)
+RegisterNUICallback("Close", function(data, cb)
     DoScreenFadeOut(111)
-    local ped = GetPlayerPed(-1)
+    local ped = PlayerPedId()
     CloseNui()
-    for k,v in pairs(VehicleShop) do
-        local actualShop = v
-        if v.shop_x ~= nil then
-            local dist = #(vector3(v.shop_x,v.shop_y,v.shop_z) - GetEntityCoords(ped))
-            if id == v.name then
-                FreezeEntityPosition(PlayerPedId(),true)
-                SetEntityCoords(ped, v.shop_x,v.shop_y+1,v.shop_z, 0, 0, 0, false)  
-                while not HasCollisionLoadedAroundEntity(PlayerPedId()) do Wait(0) end
-                FreezeEntityPosition(PlayerPedId(),false)
-            end
+
+    -- On récupère le PNJ associé au shop actuel (id)
+    local currentPed = garageped[id]
+
+    if currentPed and DoesEntityExist(currentPed) then
+        -- On récupère la position et l'orientation du PNJ
+        local npcCoords = GetEntityCoords(currentPed)
+        local npcHeading = GetEntityHeading(currentPed)
+
+        -- CALCUL POUR APPARAÎTRE DEVANT :
+        -- On avance de 1.2 mètre dans la direction où regarde le PNJ
+        local rad = math.rad(npcHeading)
+        local spawnX = npcCoords.x + (1.2 * math.sin(-rad))
+        local spawnY = npcCoords.y + (1.2 * math.cos(-rad))
+        local spawnZ = npcCoords.z
+
+        -- Téléportation sécurisée
+        FreezeEntityPosition(ped, true)
+        -- Le joueur est placé aux coordonnées calculées et regarde VERS le PNJ (npcHeading + 180°)
+        SetEntityCoords(ped, spawnX, spawnY, spawnZ-1, 1.0, 1.0, 0.0, false)
+        SetEntityHeading(ped, (npcHeading + 180.0) % 360.0)
+
+        -- Attente du chargement de la map pour éviter de tomber dans le vide
+        while not HasCollisionLoadedAroundEntity(ped) do Wait(0) end
+        FreezeEntityPosition(ped, false)
+    else
+        -- Sécurité ultime si jamais le PNJ n'existe pas : on utilise les coordonnées brutes de la config
+        local v = VehicleShop[id]
+        if v then
+            FreezeEntityPosition(ped, true)
+            SetEntityCoords(ped, v.shop_x, v.shop_y, v.shop_z, 0.0, 0.0, 0.0, false)
+            if v.shop_h then SetEntityHeading(ped, v.shop_h) end
+            while not HasCollisionLoadedAroundEntity(ped) do Wait(0) end
+            FreezeEntityPosition(ped, false)
         end
     end
+
     DoScreenFadeIn(1000)
     DeleteGarage()
+    if cb then cb("ok") end
 end)
 
 function CloseNui()
-    SendNUIMessage(
-        {
-            type = "hide"
-        }
-    )
+    SendNUIMessage({
+        type = "hide"
+    })
     neargarage = false
     SetNuiFocus(false, false)
     inShowRoom('exit')
+    
     if inGarage then
         if LastVehicleFromGarage ~= nil then
             ReqAndDelete(LastVehicleFromGarage)
@@ -1874,6 +1899,7 @@ function CloseNui()
         DisplayHud(true)
         DisplayRadar(true)
     end
+    
     if Config.UseArenaSpawn then
         UnloadArena()
     end
@@ -1882,7 +1908,9 @@ function CloseNui()
     DeleteGarage()
     drawtext = false
     indist = false
-    FreezeEntityPosition(PlayerPedId(),false)
+    FreezeEntityPosition(PlayerPedId(), false)
+    SetEntityCollision(PlayerPedId(), true, true) -- Réactivation forcée des collisions
+    
     if not testdrive then
         presetsecondarycolor = {}
         presetprimarycolor = {}

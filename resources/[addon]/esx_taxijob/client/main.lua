@@ -125,22 +125,6 @@ AddEventHandler('esx_phone:loaded', function(phoneNumber, contacts)
     TriggerEvent('esx_phone:addSpecialContact', specialContact.name, specialContact.number, specialContact.base64Icon)
 end)
 
--- Create Blips
-CreateThread(function()
-    local blip = AddBlipForCoord(Config.Zones.TaxiActions.Pos.x, Config.Zones.TaxiActions.Pos.y,
-        Config.Zones.TaxiActions.Pos.z)
-
-    SetBlipSprite(blip, 198)
-    SetBlipDisplay(blip, 4)
-    SetBlipScale(blip, 0.7)
-    SetBlipColour(blip, 5)
-    SetBlipAsShortRange(blip, true)
-
-    BeginTextCommandSetBlipName('STRING')
-    AddTextComponentSubstringPlayerName(TranslateCap('blip_taxi'))
-    EndTextCommandSetBlipName(blip)
-end)
-
 -- Taxi Job
 CreateThread(function()
     while true do
@@ -318,29 +302,6 @@ CreateThread(function()
             end
         end
     end
-end)
-
-exports.ox_target:addBoxZone({
-    coords =  vector3(907.42, -153.37, 83.19),
-    size = vec3(0.6, 1.0, 0.1),
-    rotation = 252,
-    debug = false,
-    options = {
-        {
-            name = 'Gestion',
-            event = 'esx_taxijob:bosstaxi',
-            icon = 'fa-solid fa-computer',
-            label = 'Gestion',
-			distance = 1.5,
-        }
-    }
-})
-
-AddEventHandler('esx_taxijob:bosstaxi', function()	
-    if ESX.PlayerData.job and ESX.PlayerData.job.name == 'taxi' then
-	TriggerEvent('esx_society:openBossMenu', 'taxi', function(data, menu)
-	end, {wash = true})
-	end
 end)
 
 AddEventHandler('esx_taxijob:facturetaxi', function()	

@@ -2,20 +2,10 @@ return {
 	{
 		items = {
 			{
-				name = 'gazbottle',
+				name = 'lockpick',
 				ingredients = {
-					lingotfer = 2,
-					WEAPON_HAMMER = 0.05
-				},
-				duration = 5000,
-				count = 1,
-			},
-			{
-				name = 'chalumeau',
-				ingredients = {
-                    gazbottle = 1,
-					lingotfer = 1,
-					WEAPON_HAMMER = 0.05
+					m_fer = 2,
+					WEAPON_HAMMER = 0.01
 				},
 				duration = 5000,
 				count = 1,
@@ -24,7 +14,7 @@ return {
 				name = 'fixtool',
 				ingredients = {
 					lingotfer = 2,
-					WEAPON_HAMMER = 0.05
+					WEAPON_HAMMER = 0.01
 				},
 				duration = 5000,
 				count = 1,
@@ -33,24 +23,16 @@ return {
 				name = 'fixkit',
 				ingredients = {
 					lingotfer = 2,
-					WEAPON_HAMMER = 0.05
+					WEAPON_HAMMER = 0.01
 				},
 				duration = 5000,
 				count = 1,
 			},
 		},
 		points = {
-			vec3(-1147.083008, -2002.662109, 13.180260),
 			vec3(-345.374969, -130.687088, 39.009613)
 		},
 		zones = {
-			{
-				coords = vec3(-1146.2, -2002.05, 13.2),
-				size = vec3(3.8, 1.05, 0.15),
-				distance = 1.5,
-				rotation = 315.0,
-                debug = false,
-			},
 			{
 				coords = vec3(-346.1, -130.45, 39.0),
 				size = vec3(3.8, 1.05, 0.15),
@@ -60,7 +42,7 @@ return {
 			},
 		},
         label = 'Atelier mécano',
-		blip = { id = 566, colour = 31, scale = 0.5 },
+		--blip = { id = 566, colour = 31, scale = 0.5 },
 		groups = {['mechanic'] = 0},
 	},
 	{
@@ -214,14 +196,6 @@ return {
 	{
 		items = {
 			{
-				name = 'rabot',
-				ingredients = {
-                    cube = 2,
-				},
-				duration = 5000,
-				count = 1,
-			},
-			{
 				name = 'planche',
 				ingredients = {
                     rabot = 0.01,
@@ -238,14 +212,6 @@ return {
 				},
 				duration = 5000,
 				count = 2,
-			},
-			{
-				name = 'cube',
-				ingredients = {
-                    rabot = 1,
-				},
-				duration = 5000,
-				count = 1,
 			},
 		},
 		points = {

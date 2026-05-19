@@ -34,15 +34,3 @@ Config.RespawnPoints = {
 	{coords = vector3(341.0, -1397.3, 32.5), heading = 48.5}, -- Central Los Santos
 	{coords = vector3(1836.03, 3670.99, 34.28), heading = 296.06} -- Sandy Shores
 }
-
-Config.Hospitals = {
-
-	CentralLosSantos = {
-		Blip = {
-			coords = vector3(342.84, -1398.15, 32.51),
-			sprite = 61,
-			scale  = 0.7,
-			color  = 2
-		},
-	}
-}

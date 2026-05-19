@@ -306,22 +306,6 @@ end)
 end
 end)
 ---------------------------------------------------------
-exports.ox_target:addBoxZone({
-    coords =  vector3(295.50, -1418.64, 29.52),
-    size = vec3(0.56, 0.20, 0.2),
-    rotation = 106,
-    debug = false,
-    options = {
-        {
-            name = 'Gestion',
-            event = 'bossMenu',
-            event = 'esx_ambulancejob:bossMenu',
-            icon = 'fa-solid fa-computer',
-            label = 'Gestion',
-        }
-    }
-})
-
 AddEventHandler('esx_ambulancejob:bossMenu', function()
     if ESX.PlayerData.job and ESX.PlayerData.job.name == 'ambulance' then
     TriggerEvent('esx_society:openBossMenu', 'ambulance', function(data, menu)

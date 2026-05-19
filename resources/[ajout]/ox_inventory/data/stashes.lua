@@ -1,22 +1,4 @@
 return {
-	{
-		target = {
-			loc = vec3(451.25, -994.28, 29.70),
-			length = 1.2,
-			width = 5.6,
-			heading = 0,
-			minZ = 29.49,
-			maxZ = 32.09,
-			label = 'Casier personnel',
-			debug = false
-		},
-		name = 'policelocker',
-		label = 'Casier personnel',
-		owner = true,
-		slots = 70,
-		weight = 70000,
-		groups = {['police'] = 0}
-	},
 
 	{
 		target = {
@@ -35,6 +17,25 @@ return {
 		slots = 70,
 		weight = 70000,
 		groups = {['police'] = 4}
+	},
+
+	{
+		target = {
+			loc = vec3(451.25, -994.28, 29.70),
+			length = 1.2,
+			width = 5.6,
+			heading = 0,
+			minZ = 29.49,
+			maxZ = 32.09,
+			label = 'Casier personnel',
+			debug = false
+		},
+		name = 'policelocker',
+		label = 'Casier personnel',
+		owner = true,
+		slots = 70,
+		weight = 70000,
+		groups = {['police'] = 0}
 	},
 
 	{
@@ -107,10 +108,29 @@ return {
 		},
 		name = 'taxilocker',
 		label = 'Coffre patron',
-		owner = true,
+		owner = false,
 		slots = 70,
 		weight = 70000,
 		groups = {['taxi'] = 4}
+	},
+
+	{
+		target = {
+			loc = vec3(893.26, -167.24, 80.60),
+			length = 2.6,
+			width = 1.0,
+			heading = 330,
+            minZ=80.60,
+            maxZ=82.54,
+			label = 'Coffre personnel',
+			debug = false
+		},
+		name = 'taxijoblocker',
+		label = 'Coffre personnel',
+		owner = true,
+		slots = 70,
+		weight = 70000,
+		groups = {['taxi'] = 0}
 	},
 
 	{
@@ -126,7 +146,7 @@ return {
 		},
 		name = 'Nightclubpatronlocker',
 		label = 'Coffre Patron',
-		owner = true,
+		owner = false,
 		slots = 70,
 		weight = 70000,
 		groups = {['nightclub'] = 3}
@@ -167,7 +187,7 @@ return {
 		owner = false,
 		slots = 100,
 		weight = 100000,
-		groups = {['nightclub'] = 0}
+		groups = {['nightclub'] = 1}
 	},
 
 	{
@@ -187,4 +207,61 @@ return {
         slots = 2,
         weight = 500
     },
+
+	{
+		target = {
+			loc = vec3(-343.54, -121.52, 38.00),
+			length = 1.0,
+			width = 1.25,
+			heading = 342,
+            minZ=38.00,
+            maxZ=40.20,
+			label = 'Coffre patron',
+			debug = false
+		},
+		name = 'mechaniclocker',
+		label = 'Coffre patron',
+		owner = false,
+		slots = 70,
+		weight = 70000,
+		groups = {['mechanic'] = 4}
+	},
+
+	{
+		target = {
+			loc = vec3(-318.82, -132.00, 38.00),
+			length = 1.8,
+			width = 0.8,
+			heading = 340,
+            minZ=37.98,
+            maxZ=38.98,
+			label = 'Coffre personnel',
+			debug = false
+		},
+		name = 'mechanicjoblocker',
+		label = 'Coffre personnel',
+		owner = true,
+		slots = 70,
+		weight = 70000,
+		groups = {['mechanic'] = 0}
+	},
+
+	{
+		target = {
+			loc = vec3(-323.30, -128.84, 39.00),
+			length = 0.46,
+			width = 0.66,
+			heading = 341,
+            minZ=39.00,
+            maxZ=39.46,
+			label = 'Espace de Stockage',
+			debug = false
+		},
+		name = 'mechaniccoffrelocker',
+		label = 'Espace de Stockage',
+		owner = false,
+		slots = 70,
+		weight = 70000,
+		groups = {['mechanic'] = 1}
+	},
 }

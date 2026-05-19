@@ -23,14 +23,6 @@ Config.Vehicles = {
 }
 
 Config.Zones = {
-
-	MechanicActions = {
-		Pos   = vector3(-342.291, -133.370, 39.009 ),
-		Size  = { x = 1.0, y = 1.0, z = 1.0 },
-		Color = { r = 50, g = 200, b = 50 },
-		Type  = 21
-	},
-
 	VehicleDelivery = {
 		Pos   = vector3(-370.54, -107.12, 38.68 ),
 		Size  = { x = 20.0, y = 20.0, z = 3.0 },

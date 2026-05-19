@@ -24,17 +24,3 @@ Config.MaxInService               = -1 -- How many people can be in service at o
 Config.Locale = GetConvar('esx:locale', 'fr')
 
 Config.OxInventory                = ESX.GetConfig().OxInventory
-
-Config.PoliceStations = {
-
-	LSPD = {
-
-		Blip = {
-			Coords  = vector3(425.1, -979.5, 30.7),
-			Sprite  = 60,
-			Display = 4,
-			Scale   = 0.7,
-			Colour  = 29
-		},
-	}
-}

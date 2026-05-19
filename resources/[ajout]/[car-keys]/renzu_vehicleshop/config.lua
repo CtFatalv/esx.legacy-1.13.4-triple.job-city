@@ -63,10 +63,10 @@ VehicleShop = {
         Dist = 10, -- distance (DEPRECATED)
         Blip = {color = 38, sprite = 662, scale = 0.7},
         npc = 'cs_paper',
-        shop_x = 456.89453125,
-        shop_y = -1020.8922729492,
-        shop_z = 28.290912628174, -- coordinates for this garage
-        shop_h = 26.420000000,
+        shop_x = 464.59,
+        shop_y = -1013.17,
+        shop_z = 28.07, -- coordinates for this garage
+        shop_h = 185.00,
         spawn_x = 449.27224731445,
         spawn_y = -1025.3255615234,
         spawn_z = 27.905115127563,
@@ -115,20 +115,17 @@ VehicleShop = {
         Dist = 10, -- distance (DEPRECATED)
         Blip = {color = 38, sprite = 662, scale = 0.7},
         npc = 'cs_paper',
-        shop_x = 439.74,
-        shop_y = -995.89,
+        shop_x = 439.17,
+        shop_y = -995.83,
         shop_z = 43.69,
-        shop_h = 26.420000000,
+        shop_h = 275.00,
         spawn_x = 449.21,
         spawn_y = -981.27,
         spawn_z = 44.08,
         heading = 90.0, -- Vehicle spawn location
         plateprefix = 'LSPD', -- carefull using this, maximum should be 4, recommended is 3, use this only for limited vehicles, if you use this parameter in other shop, you might have a limited plates available, ex. LSPD1234 (max char of plate is 8) it means you only have 9999 vehicles possible with this LSPD
         shop = { -- if not vehicle is setup in Database SQL, we will use this
-            {shop='Police Plane Shop',brand='Police',stock=50,price=1000,model='polmav',name="Police", grade = 1},
-            {shop='Police Plane Shop',brand='Police',stock=50,price=1000,model='hydra',name="Police", grade = 2},
-            {shop='Police Plane Shop',brand='Police',stock=50,price=1000,model='hydra',name="Police", grade = 3},
-            {shop='Police Plane Shop',brand='Police',stock=50,price=1000,model='hydra',name="Police", grade = 4},
+            {shop='Police Plane Shop',brand='Police',stock=50,price=0,model='polmav',name="Police", grade = 4},
         },
     },
 
@@ -142,17 +139,17 @@ VehicleShop = {
         Dist = 10, -- distance (DEPRECATED)
         Blip = {color = 38, sprite = 662, scale = 0.7},
         npc = 'cs_paper',
-        shop_x = 408.00,
-        shop_y = -1413.92,
+        shop_x = 408.17,
+        shop_y = -1413.37,
         shop_z = 29.40,
-        shop_h = 26.420000000,
+        shop_h = 190.0,
         spawn_x = 408.11,
         spawn_y = -1420.44,
         spawn_z = 29.22,
         heading = 229.31, -- Vehicle spawn location
         plateprefix = 'EMS', -- carefull using this, maximum should be 4, recommended is 3, use this only for limited vehicles, if you use this parameter in other shop, you might have a limited plates available, ex. LSPD1234 (max char of plate is 8) it means you only have 9999 vehicles possible with this LSPD
         shop = { -- if not vehicle is setup in Database SQL, we will use this
-            {shop='Ambumance Vehicle Shop',brand='Ambulance',stock=50,price=100000,model='ambulance',name="Ambulance", grade = 1},
+            {shop='Ambumance Vehicle Shop',brand='Ambulance',stock=50,price=0,model='ambulance',name="Ambulance", grade = 3},
         },
     },
 
@@ -176,7 +173,31 @@ VehicleShop = {
         heading = 140.0, -- Vehicle spawn location
         plateprefix = 'EMS', -- carefull using this, maximum should be 4, recommended is 3, use this only for limited vehicles, if you use this parameter in other shop, you might have a limited plates available, ex. LSPD1234 (max char of plate is 8) it means you only have 9999 vehicles possible with this LSPD
         shop = { -- if not vehicle is setup in Database SQL, we will use this
-            {shop='Ambumance Plane Shop',brand='Ambulance',stock=50,price=1000,model='polmav',name="Ambulance", grade = 1},
+            {shop='Ambumance Plane Shop',brand='Ambulance',stock=50,price=0,model='polmav',name="Ambulance", grade = 3},
+        },
+    },
+
+    ['Taxi Vehicle Shop'] = { -- same with name
+        name = "Taxi Vehicle Shop", --MRPD police shop
+        title = "Taxi Vehicle Shop",
+        icon = 'https://i.ibb.co/v44KNf3K/pdm.png',
+        job = 'taxi',
+        type = 'car',
+        default_garage = 'Taxi Vehicle Garage',
+        Dist = 10, -- distance (DEPRECATED)
+        Blip = {color = 38, sprite = 662, scale = 0.7},
+        npc = 'cs_paper',
+        shop_x = 899.42,
+        shop_y = -177.16,
+        shop_z = 73.84,
+        shop_h = 220.56,
+        spawn_x = 902.46,
+        spawn_y = -183.90,
+        spawn_z = 73.49,
+        heading = 330.00, -- Vehicle spawn location
+        plateprefix = 'TAXI', -- carefull using this, maximum should be 4, recommended is 3, use this only for limited vehicles, if you use this parameter in other shop, you might have a limited plates available, ex. LSPD1234 (max char of plate is 8) it means you only have 9999 vehicles possible with this LSPD
+        shop = { -- if not vehicle is setup in Database SQL, we will use this
+            {shop='Taxi Vehicle Shop',brand='Taxi',stock=50,price=0,model='taxi',name="Taxi", grade = 4},
         },
     },
 

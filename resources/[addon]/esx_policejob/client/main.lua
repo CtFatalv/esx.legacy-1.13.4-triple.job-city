@@ -657,23 +657,6 @@ CreateThread(function()
 	end
 end)
 
--- Create blips
-CreateThread(function()
-	for k,v in pairs(Config.PoliceStations) do
-		local blip = AddBlipForCoord(v.Blip.Coords)
-
-		SetBlipSprite (blip, v.Blip.Sprite)
-		SetBlipDisplay(blip, v.Blip.Display)
-		SetBlipScale  (blip, v.Blip.Scale)
-		SetBlipColour (blip, v.Blip.Colour)
-		SetBlipAsShortRange(blip, true)
-
-		BeginTextCommandSetBlipName('STRING')
-		AddTextComponentSubstringPlayerName(TranslateCap('map_blip'))
-		EndTextCommandSetBlipName(blip)
-	end
-end)
-
 -- Enter / Exit entity zone events
 CreateThread(function()
 	local trackedEntities = {
@@ -850,28 +833,6 @@ if ESX.PlayerLoaded and ESX.PlayerData.job == 'police' then
 		TriggerServerEvent('esx_policejob:forceBlip')
 	end)
 end
-
-exports.ox_target:addBoxZone({
-    coords =  vector3(446.97, -974.11, 30.44),
-    size = vec3(0.2, 0.5, 0.1),
-    rotation = 102,
-    debug = false,
-    options = {
-        {
-            name = 'Gestion',
-            event = 'bossMenu',
-            event = 'esx_policejob:bossMenu',
-            icon = 'fa-solid fa-computer',
-            label = 'Gestion',
-        }
-    }
-})
-
-AddEventHandler('esx_policejob:bossMenu', function()
-    TriggerEvent('esx_society:openBossMenu', 'police', function(data, menu)
-    end, {wash = false})
-end)
-
 
 AddEventHandler('esx_policejob:policeaction', function()
     OpenPoliceActionsMenu()

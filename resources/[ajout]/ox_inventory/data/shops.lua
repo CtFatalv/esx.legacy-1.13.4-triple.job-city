@@ -41,13 +41,42 @@ return {
 	},
 
 	YouTool = {
-		name = 'YouTool',
+		name = 'Magasin D\'outils',
 		blip = {
-			id = 402, colour = 69, scale = 0.7
+			id = 867, colour = 46, scale = 0.7
 		}, inventory = {
-			{ name = 'lockpick', price = 10 }
+			{ name = 'phone', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'phone_crypter', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'radio', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'radio_gps', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'gobelet', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'bouteillevide', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'bucketvide', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'fertilisant', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'pack_lessive', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'tenue_plongee', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'bouteilleplongeevide', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'compresseur', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'secateur', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'pioche_normal', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'hache', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'rabot', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'epuisette', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'canne', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'leurre_cuivre', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'leurre_fer', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'leurre_titane', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'gravure_job', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'gravure_job2', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'cagoule', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'zip', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'cutter', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'thermal_charge', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'rasperry', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 't_bag', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
+			{ name = 'armour', price = 10, metadata = { registered = true, serial = 'OUTILS' } },
 		}, targets = {
-			{ loc = vec3(2746.8, 3473.13, 55.67), length = 0.6, width = 3.0, heading = 65.0, minZ = 55.0, maxZ = 56.8, distance = 3.0, debug = false }
+			{ loc = vec3(2747.78, 3472.78, 54.68), length = 1.0, width = 1.0, heading = 335.0, minZ = 54.68, maxZ = 56.48, distance = 3.0, debug = false }
 		}
 	},
 
@@ -56,10 +85,10 @@ return {
 		blip = {
 			id = 110, colour = 69, scale = 0.7
 		}, inventory = {
-			{ name = 'ammo-9', price = 5, },
-			{ name = 'WEAPON_KNIFE', price = 200 },
-			{ name = 'WEAPON_BAT', price = 100 },
-			{ name = 'WEAPON_PISTOL', price = 1000, metadata = { registered = true }, license = 'weapon' }
+			{ name = 'WEAPON_BAT', price = 100, metadata = { registered = true, serial = 'AMMU' }},
+			{ name = 'WEAPON_KNIFE', price = 200, metadata = { registered = true, serial = 'AMMU' }},
+			{ name = 'WEAPON_PISTOL', price = 1000, metadata = { registered = true, serial = 'AMMU' }, license = 'weapon' },
+			{ name = 'ammo-9', price = 5, metadata = { registered = true, serial = 'AMMU' }},
 		}, targets = {
 			{ loc = vec3(22.90, -1105.45, 29.8), length = 0.6, width = 0.5, heading = 160.0, minZ = 29.8, maxZ = 30.2, distance = 2.0, debug = false },
 			{ loc = vec3(-661.99, -933.49, 21.83), length = 0.6, width = 0.5, heading = 180.0, minZ = 21.8, maxZ = 22.2, distance = 2.0, debug = false  },
@@ -74,18 +103,30 @@ return {
 	},
 
 	PoliceArmoury = {
-		name = 'Police Armoury',
+		name = 'Police Armurerie',
 		groups = shared.police,
 		blip = {
 			id = 110, colour = 84, scale = 0.7
 		}, inventory = {
-			{ name = 'ammo-9', price = 5, },
-			{ name = 'ammo-rifle', price = 5, },
-			{ name = 'WEAPON_FLASHLIGHT', price = 200 },
-			{ name = 'WEAPON_NIGHTSTICK', price = 100 },
-			{ name = 'WEAPON_PISTOL', price = 500, metadata = { registered = true, serial = 'POL' }, license = 'weapon' },
-			{ name = 'WEAPON_CARBINERIFLE', price = 1000, metadata = { registered = true, serial = 'POL' }, license = 'weapon', grade = 3 },
-			{ name = 'WEAPON_STUNGUN', price = 500, metadata = { registered = true, serial = 'POL'} }
+			{ name = 'WEAPON_NIGHTSTICK', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'WEAPON_FLASHLIGHT', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'menotte', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'clemenotte', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'cutter', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'lockpick', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'herse', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'cone', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'barriere', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'armour', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'WEAPON_STUNGUN', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'weapon_pistol50', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
+			{ name = 'weapon_pumpshotgun', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
+			{ name = 'weapon_carbinerifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
+			{ name = 'weapon_sniperrifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
+			{ name = 'ammo-9', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'ammo-shotgun', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'ammo-rifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'ammo-sniper', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
 		}, targets = {
 			{ loc = vec3(453.21, -980.03, 30.68), length = 0.5, width = 3.0, heading = 270.0, minZ = 30.5, maxZ = 32.0, distance = 6, debug = false  }
 		}
@@ -103,19 +144,6 @@ return {
 			{ name = 'bandage', price = 5 }
 		}, targets = {
 			{ loc = vec3(362.82, -1388.68, 31.42), length = 0.75, width = 2.4, heading = 140.0, minZ = 31.42, maxZ = 33.42, distance = 2.0, debug = false  }
-		}
-	},
-
-	BlackMarketArms = {
-		name = 'Black Market (Arms)',
-		inventory = {
-			{ name = 'WEAPON_DAGGER', price = 5000, metadata = { registered = false	}, currency = 'black_money' },
-			{ name = 'WEAPON_CERAMICPISTOL', price = 50000, metadata = { registered = false }, currency = 'black_money' },
-			{ name = 'at_suppressor_light', price = 50000, currency = 'black_money' },
-			{ name = 'ammo-rifle', price = 1000, currency = 'black_money' },
-			{ name = 'ammo-rifle2', price = 1000, currency = 'black_money' }
-		}, targets = {
-			--{ loc = vec3(230.17, -1366.18, 39.53), length = 0.8, width = 1.6, heading = 50.0, minZ = 38.53, maxZ = 40.93, distance = 1.5, debug = false  }
 		}
 	},
 

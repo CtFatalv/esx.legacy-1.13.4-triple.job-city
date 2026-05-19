@@ -1326,6 +1326,12 @@ return {
 		weight = 10,
 	},
 
+	['lingotor_bank'] = {
+		label = 'Lingot en or de la Banque',
+		weight = 450,
+		stack = true,
+	},
+
 	['boite_diamant'] = {
 		label = 'Boite de diamants',
 		stack = true,
