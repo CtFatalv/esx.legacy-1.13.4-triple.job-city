@@ -229,7 +229,7 @@ function OpenBossMenu(society, close, options)
 				elseif element.value == "withdraw_society_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('withdraw_amount'), description = "Retirer de l'argent du compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 250000, name = "withdraw"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 9999999999, name = "withdraw"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -245,7 +245,7 @@ function OpenBossMenu(society, close, options)
 				elseif element.value == "deposit_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('deposit_amount'), description = "Déposez de l'argent sur le compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 250000, name = "deposit"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 9999999999, name = "deposit"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm2"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -261,7 +261,7 @@ function OpenBossMenu(society, close, options)
 				elseif element.value == "wash_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('wash_money_amount'), description = "Déposez de l'argent sale"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 250000, name = "wash"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 9999999999, name = "wash"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm3"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -341,7 +341,7 @@ function OpenBossMenu2(society, close, options)
 				elseif element.value == "withdraw_society_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('withdraw_amount'), description = "Retirer de l'argent du compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 250000, name = "withdraw"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 9999999999, name = "withdraw"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -357,7 +357,7 @@ function OpenBossMenu2(society, close, options)
 				elseif element.value == "deposit_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('deposit_amount'), description = "Déposez de l'argent sur le compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 250000, name = "deposit"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 9999999999, name = "deposit"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm2"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -373,7 +373,7 @@ function OpenBossMenu2(society, close, options)
 				elseif element.value == "wash_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('wash_money_amount'), description = "Déposez de l'argent sale"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 250000, name = "wash"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 9999999999, name = "wash"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm3"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -453,7 +453,7 @@ function OpenBossMenu3(society, close, options)
 				elseif element.value == "withdraw_society_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('withdraw_amount'), description = "Retirer de l'argent du compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 250000, name = "withdraw"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à retirer..", inputMin = 1, inputMax = 9999999999, name = "withdraw"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -469,7 +469,7 @@ function OpenBossMenu3(society, close, options)
 				elseif element.value == "deposit_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('deposit_amount'), description = "Déposez de l'argent sur le compte de la société"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 250000, name = "deposit"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Montant à déposer..", inputMin = 1, inputMax = 9999999999, name = "deposit"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm2"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}
@@ -485,7 +485,7 @@ function OpenBossMenu3(society, close, options)
 				elseif element.value == "wash_money" then
 					local elements = {
 						{unselectable = true, icon = "fas fa-wallet", title = TranslateCap('wash_money_amount'), description = "Déposez de l'argent sale"},
-						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 250000, name = "wash"},
+						{icon = "fas fa-wallet", title = "Montant", input = true, inputType = "number", inputPlaceholder = "Quantité à laver..", inputMin = 1, inputMax = 9999999999, name = "wash"},
 						{icon = "fas fa-check", title = "Confirmer", value = "confirm3"},
 						{icon = "fas fa-arrow-left", title = "Retour", value = "return"}
 					}

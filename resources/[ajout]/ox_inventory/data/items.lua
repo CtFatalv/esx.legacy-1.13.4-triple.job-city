@@ -1320,6 +1320,12 @@ return {
 		weight = 10,
 	},
 
+	['money_bank'] = {
+		label = 'Argent de la Banque',
+		stack = true,
+		weight = 10,
+	},
+
 	['boite_diamant'] = {
 		label = 'Boite de diamants',
 		stack = true,
