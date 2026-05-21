@@ -31,7 +31,7 @@ CreateThread(function()
             debugPoly = false,
             minZ = data.coord.z,
             maxZ = data.coord.z+2,
-            debugPoly = true
+            debugPoly = false
         }, {
             options = {
                 {
