@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le : ven. 05 déc. 2025 à 17:26
--- Version du serveur : 10.11.13-MariaDB-0ubuntu0.24.04.1
--- Version de PHP : 8.3.25
+-- Généré le : jeu. 21 mai 2026 à 12:11
+-- Version du serveur : 10.11.14-MariaDB-0ubuntu0.24.04.1
+-- Version de PHP : 8.3.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `es_extended`
+-- Base de données : `s51_Mime`
 --
 
 -- --------------------------------------------------------
@@ -209,11 +209,14 @@ INSERT INTO `jobs` (`name`, `label`, `whitelisted`) VALUES
 ('ambulance', 'Ambulancier', 1),
 ('bucheron', 'Bûcheron', 1),
 ('cardealer', 'Concessionnaire', 1),
-('mechanic', 'Mechanicien', 1),
+('mechanic', 'Mécanicien', 1),
 ('mineur', 'Mineur', 1),
 ('nightclub', 'Nightclub', 1),
 ('offambulance', 'Off Ambulancier', 1),
+('offmechanic', 'Off Mécanicien', 1),
+('offnightclub', 'Off Nightclub', 1),
 ('offpolice', 'Off Policier', 1),
+('offtaxi', 'Off taxi', 1),
 ('police', 'Policier', 1),
 ('shop01', 'Shop01', 1),
 ('shop02', 'Shop02', 1),
@@ -290,77 +293,91 @@ INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, 
 (24, 'taxi', 2, 'experimente', 'Employé', 0, '{}', '{}'),
 (25, 'taxi', 3, 'uber', 'Chef', 0, '{}', '{}'),
 (26, 'taxi', 4, 'boss', 'Patron', 0, '{}', '{}'),
-(27, 'mechanic', 0, 'recrue', 'Recrue', 0, '{}', '{}'),
-(28, 'mechanic', 1, 'novice', 'Apprenti', 0, '{}', '{}'),
-(29, 'mechanic', 2, 'experimente', 'Employé', 0, '{}', '{}'),
-(30, 'mechanic', 3, 'chief', 'Chef', 0, '{}', '{}'),
-(31, 'mechanic', 4, 'boss', 'Patron', 0, '{}', '{}'),
-(32, 'cardealer', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
-(33, 'cardealer', 1, 'novice', 'Apprenti', 0, '{}', '{}'),
-(34, 'cardealer', 2, 'experienced', 'Employé', 0, '{}', '{}'),
-(35, 'cardealer', 3, 'boss', 'Patron', 0, '{}', '{}'),
-(36, 'nightclub', 0, 'barman', 'Barman', 0, '{}', '{}'),
-(37, 'nightclub', 1, 'dancer', 'Danseur', 0, '{}', '{}'),
-(38, 'nightclub', 2, 'chef', 'Chef', 0, '{}', '{}'),
-(39, 'nightclub', 3, 'boss', 'Patron', 0, '{}', '{}'),
-(40, 'abatteur', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(41, 'abatteur', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(42, 'abatteur', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(43, 'vigneron', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(44, 'vigneron', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(45, 'vigneron', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(46, 'agriculteur', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(47, 'agriculteur', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(48, 'agriculteur', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(49, 'mineur', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(50, 'mineur', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(51, 'mineur', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(52, 'bucheron', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(53, 'bucheron', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(54, 'bucheron', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(55, 'tailleur', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(56, 'tailleur', 1, 'chef', 'Chef', 0, '{}', '{}'),
-(57, 'tailleur', 2, 'boss', 'Patron', 0, '{}', '{}'),
-(58, 'shop01', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(59, 'shop01', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(60, 'shop02', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(61, 'shop02', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(62, 'shop03', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(63, 'shop03', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(64, 'shop04', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(65, 'shop04', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(66, 'shop05', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(67, 'shop05', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(68, 'shop06', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(69, 'shop06', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(70, 'shop07', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(71, 'shop07', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(72, 'shop08', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(73, 'shop08', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(74, 'shop09', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(75, 'shop09', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(76, 'shop10', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(77, 'shop10', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(78, 'shop11', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(79, 'shop11', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(80, 'shop12', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(81, 'shop12', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(82, 'shop13', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(83, 'shop13', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(84, 'shop14', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(85, 'shop14', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(86, 'shop15', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(87, 'shop15', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(88, 'shop16', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(89, 'shop16', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(90, 'shop17', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(91, 'shop17', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(92, 'shop18', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(93, 'shop18', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(94, 'shop19', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(95, 'shop19', 1, 'boss', 'Patron', 0, '{}', '{}'),
-(96, 'shop20', 0, 'employee', 'Employé', 0, '{}', '{}'),
-(97, 'shop20', 1, 'boss', 'Patron', 0, '{}', '{}');
+(27, 'offtaxi', 0, 'offrecrue', 'Off Recrue', 0, '{}', '{}'),
+(28, 'offtaxi', 1, 'offnovice', 'Off Apprenti', 0, '{}', '{}'),
+(29, 'offtaxi', 2, 'offexperimente', 'Off Employé', 0, '{}', '{}'),
+(30, 'offtaxi', 3, 'offuber', 'Off Chef', 0, '{}', '{}'),
+(31, 'offtaxi', 4, 'offboss', 'Off Patron', 0, '{}', '{}'),
+(32, 'mechanic', 0, 'recrue', 'Recrue', 0, '{}', '{}'),
+(33, 'mechanic', 1, 'novice', 'Apprenti', 0, '{}', '{}'),
+(34, 'mechanic', 2, 'experimente', 'Employé', 0, '{}', '{}'),
+(35, 'mechanic', 3, 'chief', 'Chef', 0, '{}', '{}'),
+(36, 'mechanic', 4, 'boss', 'Patron', 0, '{}', '{}'),
+(37, 'offmechanic', 0, 'offrecrue', 'Off Recrue', 0, '{}', '{}'),
+(38, 'offmechanic', 1, 'offnovice', 'Off Apprenti', 0, '{}', '{}'),
+(39, 'offmechanic', 2, 'offexperimente', 'Off Employé', 0, '{}', '{}'),
+(40, 'offmechanic', 3, 'offchief', 'Off Chef', 0, '{}', '{}'),
+(41, 'offmechanic', 4, 'offboss', 'Off Patron', 0, '{}', '{}'),
+(42, 'cardealer', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+(43, 'cardealer', 1, 'novice', 'Apprenti', 0, '{}', '{}'),
+(44, 'cardealer', 2, 'experienced', 'Employé', 0, '{}', '{}'),
+(45, 'cardealer', 3, 'boss', 'Patron', 0, '{}', '{}'),
+(46, 'nightclub', 0, 'barman', 'Barman', 0, '{}', '{}'),
+(47, 'nightclub', 1, 'dancer', 'Danseur', 0, '{}', '{}'),
+(48, 'nightclub', 2, 'chef', 'Chef', 0, '{}', '{}'),
+(49, 'nightclub', 3, 'boss', 'Patron', 0, '{}', '{}'),
+(50, 'offnightclub', 0, 'offbarman', 'Off Barman', 0, '{}', '{}'),
+(51, 'offnightclub', 1, 'offdancer', 'Off Danseur', 0, '{}', '{}'),
+(52, 'offnightclub', 2, 'offchef', 'Off Chef', 0, '{}', '{}'),
+(53, 'offnightclub', 3, 'offboss', 'Off Patron', 0, '{}', '{}'),
+(54, 'abatteur', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(55, 'abatteur', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(56, 'abatteur', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(57, 'vigneron', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(58, 'vigneron', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(59, 'vigneron', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(60, 'agriculteur', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(61, 'agriculteur', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(62, 'agriculteur', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(63, 'mineur', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(64, 'mineur', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(65, 'mineur', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(66, 'bucheron', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(67, 'bucheron', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(68, 'bucheron', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(69, 'tailleur', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(70, 'tailleur', 1, 'chef', 'Chef', 0, '{}', '{}'),
+(71, 'tailleur', 2, 'boss', 'Patron', 0, '{}', '{}'),
+(72, 'shop01', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(73, 'shop01', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(74, 'shop02', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(75, 'shop02', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(76, 'shop03', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(77, 'shop03', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(78, 'shop04', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(79, 'shop04', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(80, 'shop05', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(81, 'shop05', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(82, 'shop06', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(83, 'shop06', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(84, 'shop07', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(85, 'shop07', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(86, 'shop08', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(87, 'shop08', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(88, 'shop09', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(89, 'shop09', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(90, 'shop10', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(91, 'shop10', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(92, 'shop11', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(93, 'shop11', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(94, 'shop12', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(95, 'shop12', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(96, 'shop13', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(97, 'shop13', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(98, 'shop14', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(99, 'shop14', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(100, 'shop15', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(101, 'shop15', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(102, 'shop16', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(103, 'shop16', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(104, 'shop17', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(105, 'shop17', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(106, 'shop18', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(107, 'shop18', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(108, 'shop19', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(109, 'shop19', 1, 'boss', 'Patron', 0, '{}', '{}'),
+(110, 'shop20', 0, 'employee', 'Employé', 0, '{}', '{}'),
+(111, 'shop20', 1, 'boss', 'Patron', 0, '{}', '{}');
 
 -- --------------------------------------------------------
 
@@ -611,7 +628,6 @@ CREATE TABLE `users` (
   `pincode` int(11) DEFAULT NULL,
   `phone_number` int(11) DEFAULT NULL,
   `ip` varchar(45) DEFAULT '0.0.0.0'
-  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -820,7 +836,7 @@ ALTER TABLE `fine_types`
 -- AUTO_INCREMENT pour la table `job_grades`
 --
 ALTER TABLE `job_grades`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT pour la table `owned_etabli`
