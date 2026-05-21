@@ -56,9 +56,9 @@ Config.marchand = {
             name = ""
         }, 
         sellItems = {
-            {item = "money_bank", price = 10, currency = "money"},
-            {item = "lingotor", price = 10, currency = "money"},
-            {item = "boite_diamant", price = 10, currency = "money"},
+            {item = "money_bank", price = 10, currency = "black_money"},
+            {item = "lingotor_bank", price = 10, currency = "black_money"},
+            {item = "boite_diamant", price = 10, currency = "black_money"},
         }
     },
     {
