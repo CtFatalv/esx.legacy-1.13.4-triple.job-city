@@ -299,7 +299,7 @@ return {
 			{
 				name = 'filetdepoulet',
 				ingredients = {
-                    poulet = 1,
+                    a_c_hen = 1,
 					WEAPON_KNIFE = 0.01
 				},
 				duration = 5000,

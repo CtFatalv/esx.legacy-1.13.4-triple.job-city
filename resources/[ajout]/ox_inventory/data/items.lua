@@ -730,12 +730,6 @@ return {
 		weight = 10,
 	},
 
-	['poulet'] = {
-		label = 'Poulet',
-		stack = true,
-		weight = 10,
-	},
-
 	['filetdepoulet'] = {
 		label = 'Filet de poulet',
 		stack = true,
