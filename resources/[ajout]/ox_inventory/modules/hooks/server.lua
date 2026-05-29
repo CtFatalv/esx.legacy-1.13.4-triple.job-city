@@ -47,6 +47,8 @@ local function TriggerEventHooks(event, payload)
 				self.success = false
 			end
 
+			Wait(50)
+
 			triggerPostEvents(self, self.success, payload)
 		end
 	})
@@ -75,6 +77,8 @@ local function TriggerEventHooks(event, payload)
 				shared.info(('Triggering event hook "%s".'):format(hook.hookId))
 			end
 
+			result[#result + 1] = hook.hookId
+
 			if hook.__call then
 				local start = microtime()
 				local _, response = pcall(hook, payload)
@@ -92,8 +96,6 @@ local function TriggerEventHooks(event, payload)
 					return result
 				end
 			end
-
-			result[#result + 1] = hook.hookId
 
 			::continue::
         end

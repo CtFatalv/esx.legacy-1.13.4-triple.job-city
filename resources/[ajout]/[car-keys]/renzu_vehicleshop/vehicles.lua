@@ -37,16 +37,6 @@ Config.Vehicles = {
         ['hash'] = `blista`,
         ['shop'] = 'pdm',
     },
-    ['blista2'] = {
-        ['name'] = 'Blista Compact',
-        ['brand'] = 'Dinka',
-        ['model'] = 'blista2',
-        ['price'] = 0,
-        ['category'] = 'compacts',
-        ['categoryLabel'] = 'Compacts',
-        ['hash'] = `blista2`,
-        ['shop'] = 'pdm',
-    },
     ['brioso'] = {
         ['name'] = 'Brioso R/A',
         ['brand'] = 'Grotti',
