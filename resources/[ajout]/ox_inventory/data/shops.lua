@@ -123,7 +123,7 @@ return {
 			{ name = 'weapon_pumpshotgun', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
 			{ name = 'weapon_carbinerifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
 			{ name = 'weapon_sniperrifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4, license = 'weapon' },
-			{ name = 'ammo-9', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
+			{ name = 'ammo-50', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
 			{ name = 'ammo-shotgun', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
 			{ name = 'ammo-rifle', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
 			{ name = 'ammo-sniper', metadata = { registered = true, serial = 'LSPD' }, grade = 4 },
